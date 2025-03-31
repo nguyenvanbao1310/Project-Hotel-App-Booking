@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="homecolor">#0011FF</color>
+    <color name="btnface">#266AD1</color>
+    <color name="btngoogle">#D14426</color>
+    <color name="signcolor">#00BD6B</color>
+</resources>
