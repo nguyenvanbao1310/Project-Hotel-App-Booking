@@ -1,8 +1,6 @@
-package entity;
+package com.example.demo.api.entity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
