@@ -1,6 +1,6 @@
-package entity;
+package com.example.demo.api.entity;
 
-import enums.EnumRole;
+import com.example.demo.api.enums.EnumRole;
 import jakarta.persistence.*;
 import lombok.Data;
 

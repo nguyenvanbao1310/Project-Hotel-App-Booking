@@ -1,7 +1,6 @@
-package entity;
+package com.example.demo.api.entity;
 
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
