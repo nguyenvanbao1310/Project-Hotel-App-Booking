@@ -1,4 +1,4 @@
-    package com.example.hotel_project;
+    package com.example.hotel_project.activity;
 
     import android.content.Intent;
     import android.os.Bundle;
@@ -8,10 +8,10 @@
     import android.widget.Toast;
     import java.util.HashMap;
     import java.util.Map;
-    import com.example.hotel_project.Api.EmailApi;
-    import com.example.hotel_project.Api.RetrofitClient;
 
     import androidx.appcompat.app.AppCompatActivity;
+
+    import com.example.hotel_project.R;
 
     import retrofit2.Call;
     import retrofit2.Callback;
