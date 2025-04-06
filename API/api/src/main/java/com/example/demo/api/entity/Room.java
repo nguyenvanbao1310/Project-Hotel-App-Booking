@@ -1,10 +1,9 @@
 package com.example.demo.api.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +17,14 @@ public class Room {
 
     private double price;
     private boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
+    @OneToMany(mappedBy = "roomBook")
+    private List<BookingSchedule> bookingSchedules;
+
+    @OneToMany(mappedBy = "roomOrder")
+    private List<BookingOrder> bookingOrders;
 }

@@ -27,4 +27,7 @@ public class Account {
     @OneToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
+
+    @OneToOne(mappedBy = "hotelAdmin")
+    private Hotel hotel;
 }

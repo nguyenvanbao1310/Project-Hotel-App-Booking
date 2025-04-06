@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public abstract class  Person {
     @Id
     private String id;
-
     private String fullName;
     private String CCCD;
     private String address;
