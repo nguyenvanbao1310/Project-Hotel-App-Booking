@@ -14,6 +14,10 @@ public class Review {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account accountReview;
 
+    @ManyToOne
+    @JoinColumn(name = "booking_order_id")
+    private BookingOrder bookingOrder;
+
     private int rating;
     private String content;
     private LocalDate reviewDate;
