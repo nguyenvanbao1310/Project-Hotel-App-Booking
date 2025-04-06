@@ -21,4 +21,6 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms;
 
+    private String hotelImageUrl;
+
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -19,6 +20,9 @@ public class BookingOrder {
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room roomOrder;
+
+    @OneToMany(mappedBy = "bookingOrder")
+    private List<Review> reviews;
 
     private LocalDateTime dateStart;
     private LocalDateTime dateEnd;
