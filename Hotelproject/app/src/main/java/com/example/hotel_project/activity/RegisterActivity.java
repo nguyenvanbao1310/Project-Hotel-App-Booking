@@ -1,13 +1,10 @@
-package com.example.hotel_project;
+package com.example.hotel_project.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.util.Log;
 
 
@@ -21,9 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hotel_project.Api.UserApi;
-import com.example.hotel_project.Api.RetrofitClient;
-import com.example.hotel_project.Model.User;
+import com.example.hotel_project.R;
 
 
 public class RegisterActivity extends AppCompatActivity

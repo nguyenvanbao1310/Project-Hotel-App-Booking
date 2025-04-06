@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class Hotel {
     @Id
-    String idHotel;
+    String id;
     String name;
     String address;
     String city;
@@ -21,6 +21,6 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms;
 
-    private String hotelImageUrl;
+    private String hotel_image_url;
 
 }

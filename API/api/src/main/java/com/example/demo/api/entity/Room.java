@@ -19,7 +19,7 @@ public class Room {
     private boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_id")
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
     private Hotel hotel;
 
     @OneToMany(mappedBy = "roomBook")
