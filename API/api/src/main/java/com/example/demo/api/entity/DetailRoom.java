@@ -13,6 +13,7 @@ public class DetailRoom {
 
     private double roomArea;
     private int bedNumbers;
+    private int bathroomNumber;
     private String bedType;
 
     @ElementCollection

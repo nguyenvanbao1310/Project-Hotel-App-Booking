@@ -6,4 +6,6 @@
     <color name="btnface">#266AD1</color>
     <color name="btngoogle">#D14426</color>
     <color name="signcolor">#00BD6B</color>
+    <color name="text">#317bef</color>
+    <color name="text_sliver">#969799</color>
 </resources>
