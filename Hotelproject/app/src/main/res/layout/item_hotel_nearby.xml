@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="240dp"
-    android:layout_height="310dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="342dp"
+    android:layout_height="170dp"
     android:layout_marginStart="9dp"
+    android:layout_marginTop="10dp"
     android:elevation="24dp"
     android:padding="16dp"
     app:cardCornerRadius="16dp"
@@ -12,27 +14,29 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="331dp"
+        android:layout_height="152dp">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/frame_img"
+            android:layout_width="144dp"
+            android:layout_height="139dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.011"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageHotel"
-                android:layout_width="200dp"
-                android:layout_height="160dp"
+                android:layout_width="134dp"
+                android:layout_height="115dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/rounded_corners"
                 android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/ImageRoundedCornerStyle"/>
+                app:shapeAppearanceOverlay="@style/ImageRoundedCornerStyle" />
 
             <ImageView
                 android:id="@+id/heartIcon"
@@ -40,85 +44,72 @@
                 android:layout_height="30dp"
                 android:layout_gravity="top|end"
                 android:layout_marginTop="20dp"
-                android:scaleType="center"
-                android:src="@drawable/ic_heart"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/circle_white"
-                android:layout_marginEnd="10dp"/>
+                android:scaleType="center"
+                android:src="@drawable/ic_heart" />
         </FrameLayout>
+
         <TextView
             android:id="@+id/textName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_hotel"
+            android:drawablePadding="8dp"
             android:paddingTop="4dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:drawableStart="@drawable/ic_hotel"
-            android:drawablePadding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
             app:layout_constraintTop_toBottomOf="@+id/textDiscount" />
 
         <TextView
             android:id="@+id/textAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="165dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="8dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="#757575"
             android:textSize="12sp"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textName" />
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
 
         <TextView
             android:id="@+id/textDiscount"
             android:layout_width="85dp"
             android:layout_height="20dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_background_sliver"
             android:gravity="center"
             android:text="10% Off"
             android:textColor="@color/text"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frame_img" />
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textStar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="8dp"
             android:text="4.5"
             android:textColor="@color/text_sliver"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frame_img" />
-
-        <TextView
-            android:id="@+id/textStar2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="12dp"
-            android:drawableStart="@drawable/ic_star"
-            android:drawablePadding="8dp"
-            android:text="4.5"
-            android:textColor="@color/text_sliver"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frame_img" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

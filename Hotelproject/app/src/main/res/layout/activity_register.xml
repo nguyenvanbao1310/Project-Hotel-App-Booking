@@ -30,7 +30,7 @@
             android:layout_margin="15dp">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgUser"
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -51,7 +51,7 @@
                 android:inputType="text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imgUser"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,7 +62,7 @@
             android:layout_margin="15dp">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgEmail"
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -82,7 +82,7 @@
                 android:inputType="textEmailAddress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imgEmail"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -93,7 +93,7 @@
             android:layout_margin="15dp">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgPhone"
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -113,7 +113,7 @@
                 android:inputType="phone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imgPhone"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -124,7 +124,7 @@
             android:layout_margin="15dp">
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgPassword"
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -145,7 +145,7 @@
                 android:inputType="textPassword"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imgPassword"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -207,7 +207,7 @@
             android:layout_gravity="center|center_horizontal">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textCreating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -216,12 +216,12 @@
                 android:layout_marginBottom="4dp"
                 android:text="By creating an account, you are agree to our"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView8"
+                app:layout_constraintEnd_toStartOf="@+id/textTerms"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/textTerms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -234,7 +234,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintStart_toEndOf="@+id/textCreating"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
