@@ -1,5 +1,7 @@
 package com.example.hotel_project.model;
 
+import java.util.List;
+
 public class Hotel {
     private String id;
     private String name;
@@ -9,8 +11,9 @@ public class Hotel {
     private String hotel_image_url;
     private String hotelAdminId;
 
-    public Hotel() {
+    private List<String> hotels_images;
 
+    public Hotel() {
     }
 
     public String getId() {
@@ -68,4 +71,24 @@ public class Hotel {
     public void setHotelAdminId(String hotelAdminId) {
         this.hotelAdminId = hotelAdminId;
     }
+
+    public List<String> getHotels_images() {
+        return hotels_images;
+    }
+
+    public void setHotels_images(List<String> hotels_images) {
+        this.hotels_images = hotels_images;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", images=" + hotels_images +
+                // Thêm các trường khác nếu có
+                '}';
+    }
+
 }

@@ -17,4 +17,10 @@ public class HotelService {
     {
         return hotelRepository.findAll();
     }
+
+    public Hotel getHotelById(String hotel_id)
+    {
+        return hotelRepository.findById(hotel_id)
+                .orElseThrow(() -> new RuntimeException("Hotel not found with hotel_id: " + hotel_id));
+    }
 }
