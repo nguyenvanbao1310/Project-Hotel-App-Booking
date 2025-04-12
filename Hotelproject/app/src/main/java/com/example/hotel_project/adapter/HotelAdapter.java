@@ -1,6 +1,8 @@
 package com.example.hotel_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.hotel_project.activity.HotelDetailActivity;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.R;
+import com.example.hotel_project.retrofit.RetrofitClient;
 
 import java.util.List;
+
+import retrofit2.Retrofit;
 
 public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHolder> {
 
@@ -40,8 +46,19 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
         holder.textAddress.setText(hotel.getAddress() + ", " + hotel.getCity());
 
         // Load ảnh từ URL
-        String fullUrl = "http://192.168.1.18:8080" + hotel.getHotel_image_url();
-        Glide.with(context).load(fullUrl).into(holder.imageHotel);
+        String fullUrl = RetrofitClient.IMG_URL
+                + hotel.getHotel_image_url()
+                + "?v=" + System.currentTimeMillis();
+
+        Glide.with(context)
+                .load(fullUrl)
+                .into(holder.imageHotel);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HotelDetailActivity.class);
+            intent.putExtra("hotel_id", hotel.getId());
+            context.startActivity(intent);
+        });
     }
 
     @Override

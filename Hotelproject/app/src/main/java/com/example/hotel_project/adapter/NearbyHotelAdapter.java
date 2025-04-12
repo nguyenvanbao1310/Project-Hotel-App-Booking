@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
 import com.example.hotel_project.model.Hotel;
+import com.example.hotel_project.retrofit.RetrofitClient;
 
 import java.util.List;
 
@@ -39,8 +40,12 @@ public class NearbyHotelAdapter extends RecyclerView.Adapter<NearbyHotelAdapter.
         holder.textAddress.setText(hotel.getAddress() + ", " + hotel.getCity());
 
         // Load ảnh từ URL
-        String fullUrl = "http://192.168.1.18:8080" + hotel.getHotel_image_url();
-        Glide.with(context).load(fullUrl).into(holder.imageHotel);
+        String fullUrl = RetrofitClient.IMG_URL
+                + hotel.getHotel_image_url()
+                + "?v=" + System.currentTimeMillis();
+        Glide.with(context)
+                .load(fullUrl)
+                .into(holder.imageHotel);
     }
 
     @Override

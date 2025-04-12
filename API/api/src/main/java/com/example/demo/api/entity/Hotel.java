@@ -15,7 +15,7 @@ public class Hotel {
     String address;
     String city;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "admin_id", referencedColumnName = "id")
     @JsonIgnore
     private Account hotelAdmin;
@@ -26,6 +26,9 @@ public class Hotel {
     private String description;
 
     private String hotel_image_url;
+
+    @ElementCollection
+    private List<String> hotels_images;
 
     public String getHotelAdminId(){
         return hotelAdmin != null ? hotelAdmin.getId() : null;

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 public class Account {
@@ -30,6 +32,6 @@ public class Account {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 
-    @OneToOne(mappedBy = "hotelAdmin")
-    private Hotel hotel;
+    @OneToMany(mappedBy = "hotelAdmin")
+    private List<Hotel> hotel;
 }
