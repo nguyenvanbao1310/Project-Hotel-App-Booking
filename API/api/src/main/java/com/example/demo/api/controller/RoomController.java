@@ -1,7 +1,7 @@
 package com.example.demo.api.controller;
 
 
-import com.example.demo.api.entity.Room;
+import com.example.demo.api.dto.RoomDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +18,7 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping
-    public List<Room> getAllRooms() {
+    public List<RoomDTO> getAllRooms() {
         return roomService.getAllRooms();
     }
-
 }

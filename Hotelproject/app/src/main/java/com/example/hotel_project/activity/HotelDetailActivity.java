@@ -3,19 +3,24 @@ package com.example.hotel_project.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
+import com.example.hotel_project.adapter.TabHotelDetailAdaper;
 import com.example.hotel_project.adapter.ThumbnailAdapter;
 import com.example.hotel_project.api.HotelApiService;
 import com.example.hotel_project.interfaces.ImageClickListener;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.retrofit.RetrofitClient;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,12 @@ import retrofit2.Response;
 public class HotelDetailActivity extends AppCompatActivity implements ImageClickListener {
 
     private ImageView mainImage;
+
+    private TextView nameText ;
+    private TextView addressText;
+
+    private Hotel hotel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +45,19 @@ public class HotelDetailActivity extends AppCompatActivity implements ImageClick
 
         String hotelId = getIntent().getStringExtra("hotel_id");
 
+        nameText = findViewById(R.id.hotelName);
+        addressText = findViewById(R.id.hotelAddress);
+
+
+
         if (hotelId != null) {
             getHotelDetail(hotelId); // Gọi API để lấy chi tiết khách sạn
         } else {
             Toast.makeText(this, "Hotel ID not provided", Toast.LENGTH_SHORT).show();
         }
+
+
+
     }
 
     private void getHotelDetail(String hotelId) {
@@ -49,9 +68,23 @@ public class HotelDetailActivity extends AppCompatActivity implements ImageClick
             @Override
             public void onResponse(Call<Hotel> call, Response<Hotel> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Hotel hotel = response.body();
+                    hotel = response.body();
                     Log.d("API Response", "Hotel data: " + hotel.toString());
                     showHotelDetail(hotel);
+
+                    TabLayout tabLayout = findViewById(R.id.tabLayout);
+                    ViewPager2 viewPager = findViewById(R.id.viewPager);
+                    TabHotelDetailAdaper adapter = new TabHotelDetailAdaper(HotelDetailActivity.this, hotel);
+                    viewPager.setAdapter(adapter);
+                    new TabLayoutMediator(tabLayout, viewPager,
+                            (tab, position) -> {
+                                switch (position) {
+                                    case 0: tab.setText("About"); break;
+                                    case 1: tab.setText("Type"); break;
+                                    case 2: tab.setText("Review"); break;
+                                }
+                            }).attach();
+
                 } else {
                     Log.d("API Response", "Error: " + response.code());
                     Toast.makeText(HotelDetailActivity.this, "Failed to load hotel details", Toast.LENGTH_SHORT).show();
@@ -92,6 +125,8 @@ public class HotelDetailActivity extends AppCompatActivity implements ImageClick
         }, 0);
 
         recyclerThumbnails.setAdapter(adapter);
+        nameText.setText(hotel.getName());
+        addressText.setText(hotel.getAddress());
     }
 
     @Override

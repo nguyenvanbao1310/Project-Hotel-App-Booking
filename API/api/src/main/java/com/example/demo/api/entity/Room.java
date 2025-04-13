@@ -1,5 +1,6 @@
 package com.example.demo.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    @JsonIgnore
     private Hotel hotel;
 
     @OneToMany(mappedBy = "roomBook")
@@ -27,4 +29,8 @@ public class Room {
 
     @OneToMany(mappedBy = "roomOrder")
     private List<BookingOrder> bookingOrders;
+
+    public String getHotelId() {
+        return hotel != null ? hotel.getId() : null;
+    }
 }
