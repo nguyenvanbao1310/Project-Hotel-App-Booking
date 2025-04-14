@@ -13,4 +13,5 @@ public interface HotelApiService {
     Call<List<Hotel>> getHotels();
 
     @GET("/api/hotels/{hotel_id}")
-    Call<Hotel> getHotelById(@Path("hotel_id") String hotelId);}
+    Call<Hotel> getHotelById(@Path("hotel_id") String hotelId);
+}

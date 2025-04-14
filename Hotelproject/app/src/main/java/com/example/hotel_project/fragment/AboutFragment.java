@@ -38,7 +38,6 @@ public class AboutFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("AboutFragment", "currentHotel = " + currentHotel);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             currentHotel = (Hotel) getArguments().getSerializable("hotel_data");
