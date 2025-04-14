@@ -16,7 +16,9 @@ public class Room {
     @JoinColumn(name = "detail_room_id", referencedColumnName = "id")
     private DetailRoom detailRoom;
 
-    private double price;
+    private double priceByHour;
+    private double priceByDay;
+
     private boolean status;
 
     @ManyToOne
@@ -28,9 +30,11 @@ public class Room {
     private List<BookingSchedule> bookingSchedules;
 
     @OneToMany(mappedBy = "roomOrder")
+    @JsonIgnore
     private List<BookingOrder> bookingOrders;
 
     public String getHotelId() {
         return hotel != null ? hotel.getId() : null;
     }
 }
+

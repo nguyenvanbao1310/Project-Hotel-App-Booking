@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <!-- LinearLayout chứa toàn bộ nội dung -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!-- Thông tin đánh giá + Biểu đồ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Bên trái: điểm trung bình -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="16dp">
+
+                <TextView
+                    android:id="@+id/average_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.4"
+                    android:textSize="32sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/text_primary" />
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:rating="4.4"
+                    android:isIndicator="true"
+                    android:stepSize="0.1"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:progressTint="@color/star_yellow"
+                    android:backgroundTint="@color/gray_star"/>
+
+                <TextView
+                    android:id="@+id/review_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Based on 532 reviews"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+
+            <!-- Bên phải: biểu đồ số lượng sao -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Mỗi mức sao từ 5 → 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="2dp">
+                    <TextView android:layout_width="20dp" android:layout_height="wrap_content" android:text="5" />
+                    <ProgressBar style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:id="@+id/progressBar5Star"
+                        android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1"
+                        android:progress="80" android:max="100" android:progressTint="#FFD700" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginVertical="2dp">
+                    <TextView android:layout_width="20dp" android:layout_height="wrap_content" android:text="4" />
+                    <ProgressBar style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:id="@+id/progressBar4Star"
+                        android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1"
+                        android:progress="60" android:max="100" android:progressTint="#FFD700" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginVertical="2dp">
+                    <TextView android:layout_width="20dp" android:layout_height="wrap_content" android:text="3" />
+                    <ProgressBar style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:id="@+id/progressBar3Star"
+                        android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1"
+                        android:progress="30" android:max="100" android:progressTint="#FFD700" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginVertical="2dp">
+                    <TextView android:layout_width="20dp" android:layout_height="wrap_content" android:text="2" />
+                    <ProgressBar style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:id="@+id/progressBar2Star"
+                        android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1"
+                        android:progress="10" android:max="100" android:progressTint="#FFD700" />
+                </LinearLayout>
+
+                <LinearLayout  android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginVertical="2dp">
+                    <TextView android:layout_width="20dp" android:layout_height="wrap_content" android:text="1" />
+                    <ProgressBar style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:id="@+id/progressBar1Star"
+                        android:layout_width="0dp" android:layout_height="10dp" android:layout_weight="1"
+                        android:progress="5" android:max="100" android:progressTint="#FFD700" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Danh sách đánh giá -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/review_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

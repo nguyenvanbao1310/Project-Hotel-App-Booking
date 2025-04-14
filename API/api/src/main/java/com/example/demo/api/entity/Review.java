@@ -14,6 +14,11 @@ public class Review {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account accountReview;
 
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotelReview;
+
     @ManyToOne
     @JoinColumn(name = "booking_order_id")
     private BookingOrder bookingOrder;

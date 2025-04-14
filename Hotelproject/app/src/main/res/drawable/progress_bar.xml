@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Thanh trống (Secondary Progress) -->
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#f0f0f0" /> <!-- Màu nền thanh trống -->
+            <corners android:radius="5dp"/> <!-- Độ bo góc, có thể thay đổi tùy ý -->
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <shape>
+            <solid android:color="#FFD700" /> <!-- Màu thanh tiến độ -->
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+</layer-list>

@@ -23,7 +23,8 @@ public class RoomService {
             RoomDTO dto = new RoomDTO();
             dto.setId(room.getId());
             dto.setRoomType(room.getDetailRoom() != null ? room.getDetailRoom().getBedType() : "N/A");
-            dto.setPrice(room.getPrice());
+            dto.setPriceByDay(room.getPriceByDay());
+            dto.setPriceByHour(room.getPriceByHour());
             dto.setImages(room.getDetailRoom() != null ? room.getDetailRoom().getImages() : null);
             dto.setExtension(room.getDetailRoom() != null ? room.getDetailRoom().getExtension() : null);
             return dto;

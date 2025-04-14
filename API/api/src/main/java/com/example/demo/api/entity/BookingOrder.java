@@ -21,6 +21,10 @@ public class BookingOrder {
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room roomOrder;
 
+    @ManyToOne
+    @JoinColumn(name = "hotel_id", referencedColumnName = "id")
+    private Hotel hotelOrder;
+
     @OneToMany(mappedBy = "bookingOrder")
     private List<Review> reviews;
 
