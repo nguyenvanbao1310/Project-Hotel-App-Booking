@@ -6,13 +6,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotel_project.R;
+import com.example.hotel_project.dialog.BookingDialog;
 import com.example.hotel_project.dialog.RoomDescriptionDialog;
 import com.example.hotel_project.model.RoomDTO;
 
@@ -39,7 +40,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         RoomDTO room = roomList.get(position);
         holder.textRoomType.setText(room.getRoomType());
-        holder.textPrice.setText(String.valueOf(room.getPrice()));
+        holder.textPrice.setText(String.valueOf(room.getPriceByDay()));
 
         holder.buttonDescription.setOnClickListener(v -> {
             List<String> imageUrls = room.getImages(); // giả sử mỗi room có list ảnh
@@ -48,11 +49,25 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             RoomDescriptionDialog dialog = new RoomDescriptionDialog(imageUrls, extension);
             dialog.show(fragment.getParentFragmentManager(), "RoomDescriptionDialog");
         });
+
+        holder.buttonBook.setOnClickListener(v -> {
+            showBookingDialog(room);
+        });
     }
 
     @Override
     public int getItemCount() {
         return roomList.size();
+    }
+
+    private void showBookingDialog(RoomDTO room) {
+        BookingDialog dialog = BookingDialog.newInstance(room);
+
+        dialog.setBookingListener(message -> {
+            Toast.makeText(fragment.getContext(), message, Toast.LENGTH_LONG).show();
+        });
+
+        dialog.show(fragment.getParentFragmentManager(), "BookingDialog");
     }
 
     public static class RoomViewHolder extends RecyclerView.ViewHolder {

@@ -13,7 +13,7 @@ public class RetrofitClient {
     private static Retrofit retrofit;
     public static final String BASE_URL = "http://192.168.1.18:8080/";
     public static final String IMG_URL = "http://192.168.1.18:8080";
-//    private static final String BASE_URL = "http://192.168.52.124:8080/";
+
 
 
     public static Retrofit getRetrofit() {
