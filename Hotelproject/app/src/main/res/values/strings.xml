@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hotel-project</string>
+    <string-array name="booking_type_array">
+        <item>By day</item>
+        <item>By hour</item>
+    </string-array>
 </resources>

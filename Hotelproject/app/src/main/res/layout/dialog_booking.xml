@@ -1,0 +1,145 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Booking type -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking type:"
+            android:textColor="#2b74ff"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp" />
+        <Spinner
+            android:id="@+id/spinnerBookingType"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
+        <!-- By Day -->
+        <LinearLayout
+            android:id="@+id/layoutByDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check-in date:"
+                android:textColor="#2b74ff"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textCheckIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Check-in date"
+                android:textColor="#2b74ff"
+                android:layout_marginTop="8dp"
+                android:padding="10dp"
+                android:background="#f0f0f0"
+                android:textAlignment="center"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check-out date:"
+                android:textColor="#2b74ff"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textCheckOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Check-out date"
+                android:textColor="#2b74ff"
+                android:layout_marginTop="8dp"
+                android:padding="10dp"
+                android:background="#f0f0f0"
+                android:textAlignment="center"
+                android:clickable="true"
+                android:focusable="true" />
+            <TextView
+                android:id="@+id/textPriceByDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500,000 VND / Day"
+                android:textColor="#FF5722"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- By Hour -->
+        <LinearLayout
+            android:id="@+id/layoutByHour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start time:"
+                android:textColor="#2b74ff"
+                android:textStyle="bold" />
+
+            <!-- Button to open MaterialTimePicker -->
+            <Button
+                android:id="@+id/btnTimePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Time"
+                android:textColor="#2b74ff"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of hours:"
+                android:textColor="#2b74ff"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/editHourDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Enter hours"
+                android:textColorHint="#808080" />
+            <TextView
+                android:id="@+id/textPriceByHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="70,000 VND / Hour"
+                android:textColor="#FF5722"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <!-- Confirm button -->
+        <Button
+            android:id="@+id/btnConfirmBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Booking"
+            android:backgroundTint="#2b74ff"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
