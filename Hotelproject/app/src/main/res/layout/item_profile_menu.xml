@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:background="?android:selectableItemBackground">
+
+    <!-- Icon bên trái -->
+    <ImageView
+        android:id="@+id/menuIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="12dp"
+        android:padding="6dp"
+        android:background="@drawable/circle_sliver"
+        android:scaleType="centerInside" />
+
+    <!-- Text chính -->
+    <TextView
+        android:id="@+id/menuText"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#000000" />
+
+    <!-- Dấu > -->
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_right"
+         />
+</LinearLayout>

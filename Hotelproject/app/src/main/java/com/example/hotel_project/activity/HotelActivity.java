@@ -1,71 +1,49 @@
 package com.example.hotel_project.activity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.hotel_project.adapter.HotelAdapter;
-import com.example.hotel_project.adapter.NearbyHotelAdapter;
-import com.example.hotel_project.api.HotelApiService;
-import com.example.hotel_project.model.Hotel;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.example.hotel_project.R;
-import com.example.hotel_project.retrofit.RetrofitClient;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.hotel_project.fragment.HomeFragment;
+import com.example.hotel_project.fragment.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HotelActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
 
-    private RecyclerView recyclerViewNearby;
-
-    private HotelAdapter adapter;
-
-    private NearbyHotelAdapter nearbyHotelAdapter;
-
-    private List<Hotel> hotelList;
+    private LinearLayout tabHome, tabExplore, tabFavourite, tabChat, tabProfile;
+    private TextView tabHomeText, tabProfileText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel);
 
-        recyclerView = findViewById(R.id.recyclerViewHotels);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        tabHome = findViewById(R.id.tabHome);
+        tabExplore = findViewById(R.id.tabExplore);
+        tabFavourite = findViewById(R.id.tabFavourite);
+        tabChat = findViewById(R.id.tabChat);
+        tabProfile = findViewById(R.id.tabProfile);
 
-        recyclerViewNearby = findViewById(R.id.recyclerViewHotelsNearby);
-        recyclerViewNearby.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        // Khởi tạo Retrofit và gọi API để lấy dữ liệu khách sạn
-        HotelApiService apiService = RetrofitClient.getRetrofit().create(HotelApiService.class);
-        Call<List<Hotel>> call = apiService.getHotels();
-
-        // Gọi API và nhận phản hồi
-        call.enqueue(new Callback<List<Hotel>>() {
-            @Override
-            public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {
-                if (response.isSuccessful()) {
-                    hotelList = response.body();
-                    adapter = new HotelAdapter(HotelActivity.this, hotelList);
-                    nearbyHotelAdapter = new NearbyHotelAdapter(HotelActivity.this, hotelList);
-                    recyclerView.setAdapter(adapter);
-                    recyclerViewNearby.setAdapter(nearbyHotelAdapter);
-                } else {
-                    Toast.makeText(HotelActivity.this, "Error: " + response.message(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Hotel>> call, Throwable t) {
-                Toast.makeText(HotelActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                Log.e("HotelActivity", "Error: " + t.getMessage());
-            }
+        tabHome.setOnClickListener(v -> {
+            switchFragment(new HomeFragment());
         });
+        tabProfile.setOnClickListener(v -> {
+            switchFragment(new ProfileFragment());
+        });
+
+        if (savedInstanceState == null) {
+            switchFragment(new HomeFragment());
+        }
+
     }
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.commit();
+    }
+
 }
