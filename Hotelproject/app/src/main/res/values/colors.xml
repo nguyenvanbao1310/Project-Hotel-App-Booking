@@ -16,4 +16,9 @@
     <color name="text_primary">#2b74ff</color>
     <color name="star_yellow">#FFD700</color>
     <color name="gray_star">#E0E0E0</color>
+    <color name="selectedTextColor">#2b74ff</color>
+    <color name="selectedTabColor">#2b74ff</color>
+
+    <color name="defaultTabColor">#2b74ff</color>
+    <color name="defaultTextColor">#FFFFFFFF</color>
 </resources>
