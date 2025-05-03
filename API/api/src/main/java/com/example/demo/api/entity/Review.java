@@ -3,6 +3,7 @@ package com.example.demo.api.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,4 +27,7 @@ public class Review {
     private int rating;
     private String content;
     private LocalDate reviewDate;
+
+    @ElementCollection
+    private List<String> imageReviews;
 }

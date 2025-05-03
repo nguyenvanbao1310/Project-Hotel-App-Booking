@@ -10,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
 import com.example.hotel_project.model.ReviewDTO;
+import com.example.hotel_project.retrofit.RetrofitClient;
 
 import java.util.List;
 
@@ -20,21 +22,27 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     private Fragment fragment;
     private List<ReviewDTO> reviewList;
 
+    private List<String> reviewImages;
     public ReviewAdapter(Fragment fragment, List<ReviewDTO> reviewList) {
         this.fragment = fragment;
         this.reviewList = reviewList;
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgAvatar;
-        TextView txtName, txtComment, txtRating;
+        ImageView imgAvatar, img1, img2, img3;
+        TextView txtName, txtDate,txtComment, txtRating, txtRatingValue;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
             imgAvatar = itemView.findViewById(R.id.img_avatar);
-            txtName = itemView.findViewById(R.id.txt_name);
-            txtComment = itemView.findViewById(R.id.txt_comment);
-            txtRating = itemView.findViewById(R.id.txt_rating);
+            txtName = itemView.findViewById(R.id.tvUserName);
+            txtDate = itemView.findViewById(R.id.tvDate);
+            txtComment = itemView.findViewById(R.id.tvReviewContent);
+            txtRating = itemView.findViewById(R.id.tvUserRating);
+            txtRatingValue = itemView.findViewById(R.id.tvRatingValue);
+            img1 = itemView.findViewById(R.id.img1);
+            img2 = itemView.findViewById(R.id.img2);
+            img3 = itemView.findViewById(R.id.img3);
         }
     }
 
@@ -56,12 +64,31 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         // Gán comment
         holder.txtComment.setText(review.getContent());
 
-        // Gán rating
-        holder.txtRating.setText("★ " + review.getRating());
+        holder.txtDate.setText(review.getReviewDate().toString());
 
-        // Gán ảnh đại diện nếu có (hoặc dùng ảnh default)
-        // Glide/Picasso nếu bạn có link avatar
-        // Glide.with(holder.itemView.getContext()).load(review.getAccountReview().getAvatarUrl()).into(holder.imgAvatar);
+        // Gán rating
+        StringBuilder stars = new StringBuilder();
+        for (int i = 0; i < review.getRating(); i++) {
+            stars.append("★ ");
+        }
+        holder.txtRating.setText(stars.toString().trim());
+
+        holder.txtRatingValue.setText(String.valueOf(review.getRating())+".0");
+
+        reviewImages = review.getImageReviews();
+
+        ImageView[] imageViews = new ImageView[] {
+                holder.img1, holder.img2, holder.img3
+        };
+
+        for (int i = 0; i < 3; i++) {
+            if (reviewImages != null && i < reviewImages.size()) {
+                imageViews[i].setVisibility(View.VISIBLE);
+                Glide.with(holder.itemView.getContext()).load(RetrofitClient.IMG_URL+reviewImages.get(i)).into(imageViews[i]);
+            } else {
+                imageViews[i].setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

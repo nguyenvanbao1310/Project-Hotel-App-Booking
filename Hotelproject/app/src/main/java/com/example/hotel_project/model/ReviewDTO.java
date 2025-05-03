@@ -1,6 +1,7 @@
 package com.example.hotel_project.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReviewDTO {
 
@@ -14,9 +15,10 @@ public class ReviewDTO {
     private String content;
     private LocalDate reviewDate;
 
+    private List<String> imageReviews;
 
 
-    public ReviewDTO(String idReview, String accountId, String userName, String hotelId, int rating, String content, LocalDate reviewDate) {
+    public ReviewDTO(String idReview, String accountId, String userName, String hotelId, int rating, String content, LocalDate reviewDate, List<String> imageReviews) {
         this.idReview = idReview;
         this.accountId = accountId;
         this.userName = userName;
@@ -24,7 +26,9 @@ public class ReviewDTO {
         this.rating = rating;
         this.content = content;
         this.reviewDate = reviewDate;
+        this.imageReviews = imageReviews;
     }
+
 
     public String getIdReview() {
         return idReview;
@@ -80,5 +84,13 @@ public class ReviewDTO {
 
     public void setReviewDate(LocalDate reviewDate) {
         this.reviewDate = reviewDate;
+    }
+
+    public List<String> getImageReviews() {
+        return imageReviews;
+    }
+
+    public void setImageReviews(List<String> imageReviews) {
+        this.imageReviews = imageReviews;
     }
 }

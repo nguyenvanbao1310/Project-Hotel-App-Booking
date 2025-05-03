@@ -3,6 +3,7 @@ package com.example.demo.api.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class ReviewDTO {
@@ -13,4 +14,5 @@ public class ReviewDTO {
     private int rating;
     private String content;
     private LocalDate reviewDate;
+    private List<String> imageReviews;
 }

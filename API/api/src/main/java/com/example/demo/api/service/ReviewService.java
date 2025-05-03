@@ -28,6 +28,7 @@ public class ReviewService {
             dto.setRating(review.getRating());
             dto.setContent(review.getContent());
             dto.setReviewDate(review.getReviewDate());
+            dto.setImageReviews(review.getImageReviews());
             return dto;
         }).collect(Collectors.toList());
     }
