@@ -6,7 +6,7 @@ import java.util.List;
 @Data
 public class RoomDTO {
     private String id;
-    private String roomType; // bạn sẽ lấy từ detailRoom
+    private String roomType;
     private double priceByHour;
     private double priceByDay;
     private List<String> images;

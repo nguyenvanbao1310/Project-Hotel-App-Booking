@@ -12,50 +12,54 @@
         android:paddingBottom="60dp"
         android:background="#FFFFFF">
 
-        <!-- Header -->
-        <LinearLayout
+        <!-- Title: Profile -->
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical">
+            android:text="Profile"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:padding="16dp" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_profile"
-                android:scaleType="centerCrop"
-                android:background="@drawable/circle_white"
-                android:padding="4dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="12dp">
-
-                <TextView
-                    android:text="Cruise.Byron"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="Cruise.Byron@example.com"
-                    android:textSize="14sp"
-                    android:textColor="#888888"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-
+        <!-- Đường kẻ ngang -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#E0E0E0" />
+
+        <!-- Header ở giữa -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="148dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/circle_white"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Cruise.Byron"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cruise.Byron@example.com"
+                android:textColor="#888888"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <!-- Menu List -->
         <ListView
