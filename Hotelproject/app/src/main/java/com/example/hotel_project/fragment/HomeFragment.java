@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -15,8 +16,10 @@ import com.example.hotel_project.R;
 import com.example.hotel_project.adapter.HotelAdapter;
 import com.example.hotel_project.adapter.NearbyHotelAdapter;
 import com.example.hotel_project.api.HotelApiService;
+import com.example.hotel_project.model.GuestDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.retrofit.RetrofitClient;
+import com.example.hotel_project.sharedprefs.SharedPreferencesManager;
 
 import java.util.List;
 
@@ -31,9 +34,10 @@ public class HomeFragment extends Fragment {
     private HotelAdapter adapter;
     private NearbyHotelAdapter nearbyHotelAdapter;
     private List<Hotel> hotelList;
+    private TextView textUserName;
 
     public HomeFragment() {
-        // Bắt buộc constructor rỗng
+
     }
 
     @Override
@@ -41,6 +45,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate layout cho fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        GuestDTO guestDTO = SharedPreferencesManager.getGuestDTO(getActivity());
+
+        textUserName = view.findViewById(R.id.textUserName);
+        textUserName.setText(guestDTO.getFullname());
 
         // Khởi tạo RecyclerView
         recyclerView = view.findViewById(R.id.recyclerViewHotels);

@@ -45,6 +45,7 @@
                 android:src="@drawable/ic_profile" />
 
             <TextView
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -54,6 +55,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cruise.Byron@example.com"
