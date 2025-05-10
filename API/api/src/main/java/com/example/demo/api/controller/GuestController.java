@@ -4,10 +4,8 @@ package com.example.demo.api.controller;
 import com.example.demo.api.entity.Guest;
 import com.example.demo.api.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -16,7 +14,12 @@ public class GuestController {
     private GuestService guestService;
 
     @PostMapping("add_user")
-    public Guest createUser(@RequestBody Guest guest) {
+    public ResponseEntity<?> createUser(@RequestBody Guest guest) {
         return guestService.createUser(guest);
+    }
+
+    @GetMapping("/{account_id}")
+    public ResponseEntity<?> getUser(@PathVariable String account_id) {
+        return guestService.getUser(account_id);
     }
 }
