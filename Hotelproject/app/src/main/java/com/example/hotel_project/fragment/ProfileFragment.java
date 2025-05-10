@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.hotel_project.R;
 import com.example.hotel_project.activity.MyInformationActivity;
+import com.example.hotel_project.activity.MyReviewActivity;
 import com.example.hotel_project.adapter.ProfileMenuAdapter;
 import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.GuestDTO;
@@ -62,6 +63,11 @@ public class ProfileFragment extends Fragment {
             if ("My Information".equals(item.getTitle())) {
                 // Chuyển sang MyInformationActivity
                 Intent intent = new Intent(getActivity(), MyInformationActivity.class);
+                startActivity(intent);
+            }
+
+            if ("My Reviews".equals(item.getTitle())) {
+                Intent intent = new Intent(getActivity(), MyReviewActivity.class);
                 startActivity(intent);
             }
         });

@@ -26,4 +26,9 @@ public class ReviewController {
     public ResponseEntity<List<ReviewDTO>> getReviewsByHotel(@PathVariable String hotelId) {
         return ResponseEntity.ok(reviewService.getReviewsByHotelId(hotelId));
     }
+
+    @GetMapping("/{account_id}")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByAccount(@PathVariable String account_id) {
+        return ResponseEntity.ok(reviewService.getReviewsByAccountId(account_id));
+    }
 }

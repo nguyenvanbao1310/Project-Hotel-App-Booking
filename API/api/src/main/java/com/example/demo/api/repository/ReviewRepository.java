@@ -13,4 +13,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, String> {
 
     List<Review> findByHotelReview_Id(String hotelId);
+
+    List<Review> findByAccountReview_Id(String account_id);
 }

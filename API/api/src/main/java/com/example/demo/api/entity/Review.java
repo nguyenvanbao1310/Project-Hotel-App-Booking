@@ -24,7 +24,10 @@ public class Review {
     @JoinColumn(name = "booking_order_id")
     private BookingOrder bookingOrder;
 
-    private int rating;
+
+    private double rating;
+    private int rateLocation;
+    private int rateService;
     private String content;
     private LocalDate reviewDate;
 
