@@ -117,31 +117,42 @@ public class ReviewFragment extends Fragment {
     private void loadRatings(List<ReviewDTO> reviewList)
     {
         int[] ratingCounts = new int[5];
-        float totalRating = 0;
+        double totalRating = 0.0;
+        int validReviewCount = 0;
+
         for (ReviewDTO review : reviewList) {
-            int rating = review.getRating();
-            if (rating >= 1 && rating <= 5) {
-                totalRating += rating;
-                ratingCounts[rating - 1]++;
+            Double ratingObj = review.getRating();
+            if (ratingObj != null) {
+                int rating = ratingObj.intValue();
+                if (rating >= 1 && rating <= 5) {
+                    totalRating += ratingObj;
+                    ratingCounts[rating - 1]++;
+                    validReviewCount++;
+                }
             }
         }
-        int totalReviews = reviewList.size();
-        float averageRating = totalRating / totalReviews;
+
+        double averageRating = validReviewCount > 0 ? totalRating / validReviewCount : 0.0;
+
         double[] ratingPercentages = new double[5];
         for (int i = 0; i < ratingCounts.length; i++) {
-            ratingPercentages[i] = ((double) ratingCounts[i] / totalReviews) * 100;
+            ratingPercentages[i] = validReviewCount > 0
+                    ? ((double) ratingCounts[i] / validReviewCount) * 100
+                    : 0.0;
         }
 
         String averageText = String.format(Locale.getDefault(), "%.1f", averageRating);
         averageRatingText.setText(averageText);
-        ratingBar.setRating(averageRating);
-        totalRatingText.setText(String.format("Based on %d reviews", totalReviews));
+        ratingBar.setRating((float) averageRating); // ép về float vì RatingBar dùng float
+        totalRatingText.setText(String.format("Based on %d reviews", validReviewCount));
+
         progressBar1Star.setProgress((int) ratingPercentages[0]);
         progressBar2Star.setProgress((int) ratingPercentages[1]);
         progressBar3Star.setProgress((int) ratingPercentages[2]);
         progressBar4Star.setProgress((int) ratingPercentages[3]);
         progressBar5Star.setProgress((int) ratingPercentages[4]);
     }
+
 
 
 }

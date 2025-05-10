@@ -40,6 +40,10 @@
             android:name=".activity.MyInformationActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".activity.MyReviewActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

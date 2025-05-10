@@ -11,7 +11,9 @@ public class ReviewDTO {
     private String accountId;
     private String userName;
     private String hotelId;
-    private int rating;
+    private double rating;
+    private int rateLocation;
+    private int rateService;
     private String content;
     private LocalDate reviewDate;
     private List<String> imageReviews;

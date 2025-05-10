@@ -11,24 +11,29 @@ public class ReviewDTO {
     private String userName;
 
     private String hotelId;
-    private int rating;
+
+    private double rating;
+    private int rateLocation;
+
+    private int rateService;
     private String content;
     private LocalDate reviewDate;
 
     private List<String> imageReviews;
 
 
-    public ReviewDTO(String idReview, String accountId, String userName, String hotelId, int rating, String content, LocalDate reviewDate, List<String> imageReviews) {
+    public ReviewDTO(String idReview, String accountId, String userName, String hotelId, double rating, int rateLocation, int rateService, String content, LocalDate reviewDate, List<String> imageReviews) {
         this.idReview = idReview;
         this.accountId = accountId;
         this.userName = userName;
         this.hotelId = hotelId;
         this.rating = rating;
+        this.rateLocation = rateLocation;
+        this.rateService = rateService;
         this.content = content;
         this.reviewDate = reviewDate;
         this.imageReviews = imageReviews;
     }
-
 
     public String getIdReview() {
         return idReview;
@@ -62,12 +67,28 @@ public class ReviewDTO {
         this.hotelId = hotelId;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public int getRateLocation() {
+        return rateLocation;
+    }
+
+    public void setRateLocation(int rateLocation) {
+        this.rateLocation = rateLocation;
+    }
+
+    public int getRateService() {
+        return rateService;
+    }
+
+    public void setRateService(int rateService) {
+        this.rateService = rateService;
     }
 
     public String getContent() {
