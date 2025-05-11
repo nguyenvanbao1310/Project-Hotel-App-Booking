@@ -1,6 +1,7 @@
 package com.example.hotel_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.HotelDetailActivity;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.retrofit.RetrofitClient;
 
@@ -46,6 +48,12 @@ public class NearbyHotelAdapter extends RecyclerView.Adapter<NearbyHotelAdapter.
         Glide.with(context)
                 .load(fullUrl)
                 .into(holder.imageHotel);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HotelDetailActivity.class);
+            intent.putExtra("hotel_id", hotel.getId());
+            context.startActivity(intent);
+        });
     }
 
     @Override

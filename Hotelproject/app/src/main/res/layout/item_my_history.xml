@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="9dp"
+    android:layout_marginTop="10dp"
+    android:elevation="24dp"
+    android:padding="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="340dp"
+        android:layout_height="240dp">
+
+        <FrameLayout
+            android:id="@+id/frame_img"
+            android:layout_width="144dp"
+            android:layout_height="139dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.011"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageHotel"
+                android:layout_width="134dp"
+                android:layout_height="115dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/rounded_corners"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ImageRoundedCornerStyle" />
+
+            <ImageView
+                android:id="@+id/heartIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/circle_white"
+                android:scaleType="center"
+                android:src="@drawable/ic_heart" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="165dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_hotel"
+            android:drawablePadding="8dp"
+            android:paddingTop="4dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toBottomOf="@+id/textDiscount" />
+
+        <TextView
+            android:id="@+id/textAddress"
+            android:layout_width="165dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#757575"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+        <TextView
+            android:id="@+id/textCheckIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="8dp"
+            android:text="Check-in: 01 Apr 14:00"
+            android:textColor="#2E7D32"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toBottomOf="@+id/textAddress" />
+
+        <TextView
+            android:id="@+id/textCheckOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="4dp"
+            android:text="Check-out: 02 Apr 12:00"
+            android:textColor="#C62828"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toBottomOf="@+id/textCheckIn" />
+
+        <TextView
+            android:id="@+id/textDiscount"
+            android:layout_width="85dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_background_sliver"
+            android:gravity="center"
+            android:text="10% Off"
+            android:textColor="@color/text"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/frame_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="8dp"
+            android:text="4.5"
+            android:textColor="@color/text_sliver"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="12dp"
+            android:background="#DDDDDD"
+            app:layout_constraintBottom_toTopOf="@+id/btnBook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCheckOut"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBook"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="#A7BDDC"
+            android:text="Book"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddReview"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCheckOut" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddReview"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#246AFB"
+            android:text="Add Review"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/btnBook"
+            app:layout_constraintTop_toBottomOf="@+id/textCheckOut" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
