@@ -3,7 +3,6 @@ package com.example.hotel_project.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.MyHistoryActivity;
 import com.example.hotel_project.activity.MyInformationActivity;
 import com.example.hotel_project.activity.MyReviewActivity;
 import com.example.hotel_project.adapter.ProfileMenuAdapter;
@@ -68,6 +68,11 @@ public class ProfileFragment extends Fragment {
 
             if ("My Reviews".equals(item.getTitle())) {
                 Intent intent = new Intent(getActivity(), MyReviewActivity.class);
+                startActivity(intent);
+            }
+
+            if ("History".equals(item.getTitle())) {
+                Intent intent = new Intent(getActivity(), MyHistoryActivity.class);
                 startActivity(intent);
             }
         });

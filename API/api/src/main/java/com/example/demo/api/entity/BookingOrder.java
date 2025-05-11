@@ -3,6 +3,8 @@ package com.example.demo.api.entity;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.Data;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class BookingOrder {
 
     @OneToMany(mappedBy = "bookingOrder")
     private List<Review> reviews;
+
+    private BigDecimal totalPrice;
 
     private LocalDateTime dateStart;
     private LocalDateTime dateEnd;
