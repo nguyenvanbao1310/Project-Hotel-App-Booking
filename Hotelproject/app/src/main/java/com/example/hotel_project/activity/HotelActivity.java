@@ -1,5 +1,6 @@
 package com.example.hotel_project.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,6 +51,10 @@ public class HotelActivity extends AppCompatActivity {
         tabProfile.setOnClickListener(v -> {
             Fragment fragment = new ProfileFragment();
             switchFragment(fragment);
+        });
+        tabExplore.setOnClickListener(v -> {
+            Intent intent = new Intent(HotelActivity.this, MapsActivity.class);
+            startActivity(intent);
         });
 
         if (savedInstanceState == null) {
