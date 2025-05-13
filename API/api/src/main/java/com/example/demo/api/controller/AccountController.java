@@ -102,7 +102,56 @@ public class AccountController {
             return new ResponseEntity<>("Mã OTP không chính xác.", HttpStatus.BAD_REQUEST);
         }
     }
-    
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> sendOtpForPasswordReset(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email không được để trống");
+        }
+
+        Optional<Account> accountOptional = accountServiceI.findByEmail(email);
+        if (accountOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email không tồn tại");
+        }
+
+        String otp = String.format("%04d", new Random().nextInt(9999));
+        otpService.saveOtp(email, otp);
+
+        boolean isEmailSent = emailService.sendEmail(email, "Mã OTP khôi phục mật khẩu", "Mã OTP của bạn là: " + otp);
+        if (!isEmailSent) {
+            return new ResponseEntity<>("Không thể gửi email. Vui lòng thử lại sau.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.ok("Mã OTP đã được gửi tới email của bạn");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String otp = request.get("otp");
+        String newPassword = request.get("newPassword");
+
+        if (email == null || otp == null || newPassword == null) {
+            return ResponseEntity.badRequest().body("Email, OTP và mật khẩu mới không được để trống");
+        }
+
+        String storedOtp = otpService.getOtpFromMemoryOrDb(email);
+        if (storedOtp != null && storedOtp.equals(otp)) {
+            Optional<Account> accountOptional = accountServiceI.findByEmail(email);
+            if (accountOptional.isPresent()) {
+                Account account = accountOptional.get();
+                String hashedPassword = PasswordEncoder.hashPassword(newPassword);
+                account.setPassword(hashedPassword);
+                accountServiceI.updateAccount(account);
+                return ResponseEntity.ok("Mật khẩu đã được đặt lại thành công");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Người dùng không tồn tại");
+            }
+        } else {
+            return new ResponseEntity<>("Mã OTP không chính xác hoặc đã hết hạn.", HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }
