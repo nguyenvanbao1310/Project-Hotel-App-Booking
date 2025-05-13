@@ -10,6 +10,7 @@ public class ReviewDTO {
     private String idReview;
     private String accountId;
     private String userName;
+    private String bookingOrderId;
     private String hotelId;
     private double rating;
     private int rateLocation;

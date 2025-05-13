@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.HotelDetailActivity;
+import com.example.hotel_project.activity.MyHistoryActivity;
+import com.example.hotel_project.activity.WriteReviewActivity;
 import com.example.hotel_project.model.BookingOrderDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.retrofit.RetrofitClient;
@@ -53,11 +56,17 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
                 .load(fullUrl)
                 .into(holder.imageHotel);
 
-//        holder.itemView.setOnClickListener(v -> {
-//            Intent intent = new Intent(context, MyHistoryActivity.class);
-//            intent.putExtra("hotel_id", hotel.getId());
-//            context.startActivity(intent);
-//        });
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HotelDetailActivity.class);
+            intent.putExtra("hotel_id", bookingOrder.getHotelId());
+            context.startActivity(intent);
+        });
+
+        holder.btnAddReview.setOnClickListener(v -> {
+            Intent intent = new Intent(context, WriteReviewActivity.class);
+            intent.putExtra("bookingOrder", bookingOrder);
+            context.startActivity(intent);
+        });
     }
 
     @Override
