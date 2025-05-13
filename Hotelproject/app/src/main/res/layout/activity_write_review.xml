@@ -1,0 +1,202 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FAFAFA"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Back & Title -->
+        <TextView
+            android:text="Write a Review"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Hotel Info Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="@drawable/rounded_background_sliver"
+            android:layout_marginTop="12dp">
+
+            <ImageView
+                android:id="@+id/img_pic_hotel"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_default" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="12dp">
+
+                <!-- Hotel Name TextView with icon -->
+                <TextView
+                    android:id="@+id/text_hotel_name"
+                    android:text="Studio M Hotel"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_hotel"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableTint="@color/black" />
+
+                <TextView
+                    android:id="@+id/text_hotel_address"
+                    android:text="Executive Suite"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:drawablePadding="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/text_checkin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:drawableLeft="@drawable/ic_checkin"
+                    android:drawablePadding="8dp"
+                    android:text="Check in   Wed, Nov 7 2022"
+                    android:textColor="#C62828"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Other grades -->
+        <TextView
+            android:text="Other grades"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Location rating -->
+        <TextView
+            android:text="Location Reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <RatingBar
+            android:id="@+id/rating_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:numStars="5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginTop="4dp" />
+
+        <!-- Service rating -->
+        <TextView
+            android:text="Service Reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <RatingBar
+            android:id="@+id/rating_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:numStars="5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_marginTop="4dp" />
+
+        <!-- Review text -->
+        <EditText
+            android:id="@+id/review_text"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="Please enter your review"
+            android:layout_marginTop="16dp"
+            android:gravity="top"
+            android:padding="10dp"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
+
+        <!-- Select pictures button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/select_pictures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Pictures"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:backgroundTint="#f9f9f9"
+            app:icon="@drawable/ic_picture"
+            app:iconPadding="8dp"
+            app:iconGravity="textStart"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:layout_marginTop="12dp"
+            app:rippleColor="@android:color/transparent"
+            app:iconTint = "@color/black"
+            android:strokeColor="@color/text_primary"
+            android:strokeWidth="1.5"
+            app:cornerRadius="8dp"/>
+
+        <!-- Image previews for selected pictures -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <ImageView
+                android:id="@+id/img_preview_1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/img_default"
+                />
+
+            <ImageView
+                android:id="@+id/img_preview_2"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/img_default"
+                />
+
+            <ImageView
+                android:id="@+id/img_preview_3"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/img_default"
+                />
+        </LinearLayout>
+
+        <!-- Submit button -->
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:backgroundTint="@color/text_primary"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="24dp" />
+    </LinearLayout>
+</ScrollView>
