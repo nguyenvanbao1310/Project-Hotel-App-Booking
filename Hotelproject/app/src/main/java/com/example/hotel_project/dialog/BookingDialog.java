@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.hotel_project.R;
 import com.example.hotel_project.activity.BookingDetailActivity;
+import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.timepicker.MaterialTimePicker;
@@ -38,10 +39,13 @@ public class BookingDialog extends BottomSheetDialogFragment {
     private BookingListener bookingListener;
     private RoomDTO room;
 
-    public static BookingDialog newInstance(RoomDTO room) {
+    private Hotel hotel;
+
+    public static BookingDialog newInstance(Hotel hotel, RoomDTO room) {
         BookingDialog dialog = new BookingDialog();
         Bundle args = new Bundle();
-        args.putSerializable("room", room); // RoomDTO implements Serializable
+        args.putSerializable("room", room);   // RoomDTO implements Serializable
+        args.putSerializable("hotel", hotel); // Hotel also must implement Serializable
         dialog.setArguments(args);
         return dialog;
     }
@@ -58,6 +62,7 @@ public class BookingDialog extends BottomSheetDialogFragment {
 
         if (getArguments() != null) {
             room = (RoomDTO) getArguments().getSerializable("room");
+            hotel = (Hotel) getArguments().getSerializable("hotel");
         }
 
         Spinner spinnerBookingType = view.findViewById(R.id.spinnerBookingType);
@@ -125,39 +130,47 @@ public class BookingDialog extends BottomSheetDialogFragment {
             double price;
             String message;
 
+            Intent intent = new Intent(getContext(), BookingDetailActivity.class);
+            intent.putExtra("room", room); // truyền RoomDTO
+
             if (spinnerBookingType.getSelectedItemPosition() == 0) {
-                // "By Day"
+                // Booking by day
                 price = room.getPriceByDay();
-                message = "Book \"" + room.getRoomType() + "\"\nFrom: " +
-                        textCheckIn.getText().toString() +
-                        "\nTo: " + textCheckOut.getText().toString();
-            } else { // "By Hour"
+                String checkIn = textCheckIn.getText().toString();
+                String checkOut = textCheckOut.getText().toString();
+
+                message = "Book \"" + room.getRoomType() + "\"\nFrom: " + checkIn + "\nTo: " + checkOut;
+
+                intent.putExtra("checkIn", checkIn);
+                intent.putExtra("checkOut", checkOut);
+                intent.putExtra("bookingType", "day");
+                intent.putExtra("hotel", hotel);
+            } else {
+                // Booking by hour
                 price = room.getPriceByHour();
                 String hourDur = editHourDuration.getText().toString();
-                message = "Book \"" + room.getRoomType() + "\"\nStart: " +
-                        String.format("%02d:%02d", selectedHour[0], selectedMinute[0]) +
-                        "\nFor: " + hourDur + " hours";
+                String startTime = String.format("%02d:%02d", selectedHour[0], selectedMinute[0]);
+
+                message = "Book \"" + room.getRoomType() + "\"\nStart: " + startTime + "\nFor: " + hourDur + " hours";
+
+                intent.putExtra("startTime", startTime);
+                intent.putExtra("hourDuration", hourDur);
+                intent.putExtra("bookingType", "hour");
+                intent.putExtra("hotel", hotel);
             }
 
-            // Tạo AlertDialog để xác nhận đặt phòng
+            // AlertDialog xác nhận
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Booking Confirmation");
             builder.setMessage("Do you want to book the \"" + room.getRoomType() + "\" room for " + price + "đ?");
-
             builder.setPositiveButton("Confirm", (dialog, which) -> {
-                dismiss(); // Đóng dialog
+                dismiss();
                 if (bookingListener != null) {
                     bookingListener.onBookingConfirmed(message);
                 }
-                Intent intent = new Intent(getContext(),BookingDetailActivity.class);
                 startActivity(intent);
             });
-
-            builder.setNegativeButton("Cancel", (dialog, which) -> {
-                // Đóng dialog mà không thực hiện hành động gì
-                dialog.dismiss();
-            });
-
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
             builder.show();
         });
         return view;

@@ -21,6 +21,8 @@ import com.example.hotel_project.model.BookingOrderDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.retrofit.RetrofitClient;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.HotelViewHolder>{
@@ -44,8 +46,23 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
         BookingOrderDTO bookingOrder= bookingOrderDTO.get(position);
         holder.textName.setText(bookingOrder.getHotelOrder().getName());
         holder.textAddress.setText(bookingOrder.getHotelOrder().getAddress() + ", " + bookingOrder.getHotelOrder().getCity());
-        holder.textDateStart.setText("Checkin: "+ bookingOrder.getDateStart().toString());
-        holder.textDateEnd.setText("Checkout: " +bookingOrder.getDateEnd().toString());
+
+        String dateStartStr = bookingOrder.getDateStart();  // Giả sử đây là chuỗi ngày như "2025-04-01T14:00:00"
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime dateStart = LocalDateTime.parse(dateStartStr, inputFormatter);
+
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = dateStart.format(outputFormatter);
+        holder.textDateStart.setText("Checkin: " + formattedDate);
+
+        String dateStartEnd = bookingOrder.getDateEnd();  // Giả sử đây là chuỗi ngày như "2025-04-01T14:00:00"
+        DateTimeFormatter inputFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime dateEnd = LocalDateTime.parse(dateStartEnd, inputFormatter1);
+
+        DateTimeFormatter outputFormatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate1 = dateEnd.format(outputFormatter1);
+        holder.textDateEnd.setText("Checkout: " + formattedDate1);
+
 
 
         // Load ảnh từ URL

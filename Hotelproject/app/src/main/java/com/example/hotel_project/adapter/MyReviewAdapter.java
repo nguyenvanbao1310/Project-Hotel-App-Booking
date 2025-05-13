@@ -1,11 +1,13 @@
 package com.example.hotel_project.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +56,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.Review
 
         ProgressBar pbLocation, pbService;
 
-
+        private LinearLayout layout;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +77,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.Review
             txtHotelName = itemView.findViewById(R.id.tvHotelName);
             txtHotelAddress = itemView.findViewById(R.id.tvHotelAddress);
             txtHotelRating = itemView.findViewById(R.id.tvHotelRating);
+            layout = itemView.findViewById(R.id.layoutImgHotel);
         }
     }
 
@@ -156,6 +159,12 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.Review
             public void onFailure(Call<Hotel> call, Throwable t) {
                 Log.e("HotelLoad", "Failed to load hotel info", t);
             }
+        });
+
+        holder.layout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HotelDetailActivity.class);
+            intent.putExtra("hotel_id", review.getHotelId() );
+            context.startActivity(intent);
         });
     }
 

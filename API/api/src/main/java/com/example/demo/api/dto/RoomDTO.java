@@ -7,6 +7,8 @@ import java.util.List;
 public class RoomDTO {
     private String id;
     private String roomType;
+    private int bedNumber;
+    private int bathNumber;
     private double priceByHour;
     private double priceByDay;
     private List<String> images;

@@ -22,7 +22,7 @@ public class TabHotelDetailAdaper extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0: return AboutFragment.newInstance(hotel);
-            case 1: return new TypeFragment();
+            case 1: return TypeFragment.newInstance(hotel);
             case 2: return ReviewFragment.newInstance(hotel);
             default: return new AboutFragment();
         }
