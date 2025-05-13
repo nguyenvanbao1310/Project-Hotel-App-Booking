@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotel_project.R;
 import com.example.hotel_project.dialog.BookingDialog;
 import com.example.hotel_project.dialog.RoomDescriptionDialog;
+import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
 
 import java.util.List;
@@ -24,8 +25,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private Fragment fragment;
     private List<RoomDTO> roomList;
 
-    public RoomAdapter(Fragment fragment, List<RoomDTO> roomList) {
+    private Hotel hotel;
+
+    public RoomAdapter(Fragment fragment, Hotel hotel, List<RoomDTO> roomList) {
         this.fragment = fragment;
+        this.hotel = hotel;
         this.roomList = roomList;
     }
 
@@ -61,7 +65,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     }
 
     private void showBookingDialog(RoomDTO room) {
-        BookingDialog dialog = BookingDialog.newInstance(room);
+        BookingDialog dialog = BookingDialog.newInstance(hotel, room);
 
         dialog.setBookingListener(message -> {
             Toast.makeText(fragment.getContext(), message, Toast.LENGTH_LONG).show();

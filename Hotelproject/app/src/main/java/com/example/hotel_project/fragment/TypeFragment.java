@@ -14,6 +14,7 @@ import com.example.hotel_project.R;
 import com.example.hotel_project.adapter.RoomAdapter;
 import com.example.hotel_project.api.HotelApiService;
 import com.example.hotel_project.api.RoomApiService;
+import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
 import com.example.hotel_project.retrofit.RetrofitClient;
 
@@ -30,8 +31,18 @@ public class TypeFragment extends Fragment {
     private RoomAdapter roomAdapter;
     private List<RoomDTO> roomList;
 
+    private Hotel hotel;
+
     public TypeFragment() {
         // Required empty public constructor
+    }
+
+    public static TypeFragment newInstance(Hotel hotel) {
+        TypeFragment fragment = new TypeFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("hotel", hotel); // Truyền hotel qua Bundle
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -40,11 +51,16 @@ public class TypeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_type, container, false);
 
+        if (getArguments() != null) {
+            hotel = (Hotel) getArguments().getSerializable("hotel");
+        }
+
+
         recyclerView = view.findViewById(R.id.recyclerViewType);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         roomList = new ArrayList<>();
-        roomAdapter = new RoomAdapter(this,roomList);
+        roomAdapter = new RoomAdapter(this, hotel, roomList);
         recyclerView.setAdapter(roomAdapter);
 
         fetchRooms();
@@ -54,7 +70,7 @@ public class TypeFragment extends Fragment {
 
     private void fetchRooms() {
         RoomApiService apiService = RetrofitClient.getRetrofit().create(RoomApiService.class);
-        Call<List<RoomDTO>> call = apiService.getAllRooms();
+        Call<List<RoomDTO>> call = apiService.getAllRoomsByHotelId(hotel.getId());
 
         call.enqueue(new Callback<List<RoomDTO>>() {
             @Override

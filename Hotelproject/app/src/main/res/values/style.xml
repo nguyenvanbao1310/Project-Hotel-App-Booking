@@ -12,4 +12,9 @@
         <item name="cornerSizeBottomLeft">10dp</item>
         <item name="cornerSizeBottomRight">10dp</item>
     </style>
+
+    <style name="CustomMaterialButtonStyle">
+        <item name="cornerRadius">8dp</item>  <!-- Bo góc -->
+        <item name="backgroundTint">@color/text_primary</item>  <!-- Màu nền -->
+    </style>
 </resources>

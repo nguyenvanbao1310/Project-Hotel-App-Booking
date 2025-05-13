@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-
-
     <application
         android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
@@ -59,7 +57,7 @@
         </activity>
         <activity
             android:name=".activity.MapsActivity"
-            android:exported="true" />
+            android:exported="true">
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
