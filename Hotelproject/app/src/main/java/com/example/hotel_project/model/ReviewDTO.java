@@ -10,6 +10,9 @@ public class ReviewDTO {
 
     private String userName;
 
+    private String bookingOrderId;
+
+
     private String hotelId;
 
     private double rating;
@@ -22,10 +25,11 @@ public class ReviewDTO {
     private List<String> imageReviews;
 
 
-    public ReviewDTO(String idReview, String accountId, String userName, String hotelId, double rating, int rateLocation, int rateService, String content, LocalDate reviewDate, List<String> imageReviews) {
+    public ReviewDTO(String idReview, String accountId, String userName, String bookingOrderId, String hotelId, double rating, int rateLocation, int rateService, String content, LocalDate reviewDate, List<String> imageReviews) {
         this.idReview = idReview;
         this.accountId = accountId;
         this.userName = userName;
+        this.bookingOrderId = bookingOrderId;
         this.hotelId = hotelId;
         this.rating = rating;
         this.rateLocation = rateLocation;
@@ -33,6 +37,9 @@ public class ReviewDTO {
         this.content = content;
         this.reviewDate = reviewDate;
         this.imageReviews = imageReviews;
+    }
+
+    public ReviewDTO() {
     }
 
     public String getIdReview() {
@@ -113,5 +120,13 @@ public class ReviewDTO {
 
     public void setImageReviews(List<String> imageReviews) {
         this.imageReviews = imageReviews;
+    }
+
+    public String getBookingOrderId() {
+        return bookingOrderId;
+    }
+
+    public void setBookingOrderId(String bookingOrderId) {
+        this.bookingOrderId = bookingOrderId;
     }
 }

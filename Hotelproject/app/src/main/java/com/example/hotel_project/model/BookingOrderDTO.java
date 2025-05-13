@@ -1,8 +1,9 @@
 package com.example.hotel_project.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class BookingOrderDTO {
+public class BookingOrderDTO implements Serializable {
     private String idOrder;
     private String accountId;
     private String roomId;
