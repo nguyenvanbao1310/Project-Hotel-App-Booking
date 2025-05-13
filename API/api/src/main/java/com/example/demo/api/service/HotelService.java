@@ -23,4 +23,12 @@ public class HotelService {
         return hotelRepository.findById(hotel_id)
                 .orElseThrow(() -> new RuntimeException("Hotel not found with hotel_id: " + hotel_id));
     }
+
+    public List<Hotel> getHotelsByPriceRange(double priceMin, double priceMax) {
+        return hotelRepository.findHotelsByRoomPriceRange(priceMin, priceMax);
+    }
+
+    public List<Hotel> findHotelsByPriceRangeAndRating(double priceMin, double priceMax, float rating) {
+        return hotelRepository.findHotelsByPriceRangeAndRating(priceMin, priceMax, rating);
+    }
 }

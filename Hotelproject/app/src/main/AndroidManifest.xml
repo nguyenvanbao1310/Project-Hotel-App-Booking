@@ -59,6 +59,10 @@
             android:name=".activity.MapsActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".activity.HotelFilterActivity"
+            android:exported="true">
+        </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAjudLoQ8517NdOqzwbnv4qSp04La_Iyok" />
