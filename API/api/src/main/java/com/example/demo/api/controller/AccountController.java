@@ -63,6 +63,23 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email không tồn tại");
         }
     }
+    @PostMapping("/register")
+    public ResponseEntity<String> registerAccount(@RequestBody Account account) {
+        if (accountServiceI.existsByEmail(account.getEmail())) {
+            return new ResponseEntity<>("Email đã tồn tại!", HttpStatus.BAD_REQUEST);
+        }
+
+        String otp = otpService.generateOtp();
+        String emailResponse = otpService.sendOtp(account.getEmail(), otp);
+
+        if (emailResponse.equals("Success")) {
+            otpService.saveOtpForVerification(account.getEmail(), otp);
+            // Tạm thời lưu thông tin vào memory hoặc cache nếu cần
+            return new ResponseEntity<>("OTP đã được gửi qua email. Vui lòng nhập mã OTP để hoàn tất đăng ký.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Lỗi khi gửi OTP", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 
 
