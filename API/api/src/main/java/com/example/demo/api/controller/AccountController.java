@@ -80,6 +80,28 @@ public class AccountController {
             return new ResponseEntity<>("Lỗi khi gửi OTP", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/verify-otp")
+    public ResponseEntity<String> verifyOtp(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String otp = request.get("otp");
+
+        String storedOtp = otpService.getOtpFromMemoryOrDb(email);
+
+        if (storedOtp != null && storedOtp.equals(otp)) {
+            Account account = new Account();
+            account.setEmail(email);
+            account.setUsername(request.get("username"));
+            account.setPhone(request.get("phone"));
+            account.setPassword(request.get("password"));
+            account.setRole(EnumRole.GUEST); // hoặc ADMIN nếu cần
+
+            accountServiceI.addAccount(account);
+
+            return new ResponseEntity<>("Đăng ký thành công!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Mã OTP không chính xác.", HttpStatus.BAD_REQUEST);
+        }
+    }
     
 
 
