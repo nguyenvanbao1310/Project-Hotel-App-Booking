@@ -1,20 +1,20 @@
 package com.example.hotel_project.model;
 
 public class LoginRequest {
-    private String usernameOrPhone;
+    private String email;
     private String password;
 
-    public LoginRequest(String usernameOrPhone, String password) {
-        this.usernameOrPhone = usernameOrPhone;
+    public LoginRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsernameOrPhone() {
-        return usernameOrPhone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsernameOrPhone(String usernameOrPhone) {
-        this.usernameOrPhone = usernameOrPhone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

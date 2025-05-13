@@ -19,9 +19,5 @@
 
     <!-- Bóng đổ -->
     <solid android:color="@color/topBackground"/>
-    <shadow
-        android:color="#55000000"
-        android:radius="8dp"
-        android:dx="4dp"
-        android:dy="4dp"/>
+
 </shape>

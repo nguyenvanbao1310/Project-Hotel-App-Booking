@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/account")
@@ -41,28 +38,34 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> request) {
         String email = request.get("email");
         String password = request.get("password");
 
+        Map<String, String> response = new HashMap<>();
+
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email và mật khẩu không được để trống");
+            response.put("message", "Email và mật khẩu không được để trống");
+            return ResponseEntity.badRequest().body(response);
         }
 
-        Optional<Account> accountOptional = accountServiceImpl.findByEmail(email);  // thay vì iUserSv
+        Optional<Account> accountOptional = accountServiceImpl.findByEmail(email);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
 
-            // Kiểm tra mật khẩu bằng PasswordEncoder
             if (PasswordEncoder.checkPassword(password, account.getPassword())) {
-                return ResponseEntity.ok("Đăng nhập thành công!");
+                response.put("message", "Đăng nhập thành công!");
+                return ResponseEntity.ok(response);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Mật khẩu không chính xác");
+                response.put("message", "Mật khẩu không chính xác");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email không tồn tại");
+            response.put("message", "Email không tồn tại");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
     @PostMapping("/register")
     public ResponseEntity<String> registerAccount(@RequestBody Account account) {
         if (accountServiceI.existsByEmail(account.getEmail())) {
