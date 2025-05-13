@@ -52,4 +52,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
     implementation ("jp.wasabeef:glide-transformations:4.3.0")
+    // Google Maps
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
 }
