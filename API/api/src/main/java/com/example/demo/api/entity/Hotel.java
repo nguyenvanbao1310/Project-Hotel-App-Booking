@@ -1,6 +1,7 @@
 package com.example.demo.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,6 +23,10 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "hotelReview", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Review> reviews;
 
     private String description;
 

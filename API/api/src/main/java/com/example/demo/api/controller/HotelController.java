@@ -4,10 +4,7 @@ package com.example.demo.api.controller;
 import com.example.demo.api.entity.Hotel;
 import com.example.demo.api.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,4 +24,8 @@ public class HotelController {
         return hotelService.getHotelById(hotel_id);
     }
 
+    @GetMapping("/hotelfilters")
+    public List<Hotel> findHotelsByPriceRangeAndRating(@RequestParam double priceMin, @RequestParam double priceMax, @RequestParam float rating) {
+        return hotelService.findHotelsByPriceRangeAndRating(priceMin, priceMax, rating );
+    }
 }

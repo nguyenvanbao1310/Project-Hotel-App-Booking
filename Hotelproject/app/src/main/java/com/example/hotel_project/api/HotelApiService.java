@@ -7,6 +7,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface HotelApiService {
     @GET("/api/hotels")
@@ -14,4 +15,11 @@ public interface HotelApiService {
 
     @GET("/api/hotels/{hotel_id}")
     Call<Hotel> getHotelById(@Path("hotel_id") String hotelId);
+
+    @GET("api/hotels/hotelfilters")
+    Call<List<Hotel>> findHotelsByPriceRangeAndRating(
+            @Query("priceMin") double priceMin,
+            @Query("priceMax") double priceMax,
+            @Query("rating") float rating
+    );
 }
