@@ -44,7 +44,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/circle_white"
-                android:scaleType="center"
+                android:padding="4dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_heart" />
         </FrameLayout>
 

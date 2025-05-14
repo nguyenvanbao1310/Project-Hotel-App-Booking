@@ -17,7 +17,6 @@ public class ReviewMapper {
         review.setReviewDate(dto.getReviewDate());
         review.setImageReviews(dto.getImageReviews());
         
-        // Gán các đối tượng liên quan
         review.setAccountReview(account);
         review.setHotelReview(hotel);
         review.setBookingOrder(bookingOrder);

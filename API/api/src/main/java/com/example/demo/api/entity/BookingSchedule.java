@@ -16,6 +16,10 @@ public class BookingSchedule {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account accountBook;
 
+    @OneToOne
+    @JoinColumn(name = "booking_order_id", referencedColumnName = "idOrder")
+    private BookingOrder bookingOrder;
+
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room roomBook;

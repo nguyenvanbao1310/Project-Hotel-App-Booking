@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.MyBookingActivity;
 import com.example.hotel_project.activity.MyHistoryActivity;
 import com.example.hotel_project.activity.MyInformationActivity;
 import com.example.hotel_project.activity.MyReviewActivity;
@@ -73,6 +74,11 @@ public class ProfileFragment extends Fragment {
 
             if ("History".equals(item.getTitle())) {
                 Intent intent = new Intent(getActivity(), MyHistoryActivity.class);
+                startActivity(intent);
+            }
+
+            if ("My Booking".equals(item.getTitle())) {
+                Intent intent = new Intent(getActivity(), MyBookingActivity.class);
                 startActivity(intent);
             }
         });

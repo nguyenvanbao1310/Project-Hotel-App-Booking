@@ -1,5 +1,6 @@
 package com.example.hotel_project.retrofit;
 
+import com.example.hotel_project.adapter.LocalDateTimeAdapter;
 import com.example.hotel_project.adapter.LocalDateTypeAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,6 +9,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,6 +26,7 @@ public class RetrofitClient {
         if (retrofit == null) {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                     .create();
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL) // Đường dẫn API

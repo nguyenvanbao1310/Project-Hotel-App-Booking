@@ -1,5 +1,7 @@
 package com.example.hotel_project.adapter;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -85,6 +87,13 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
                 } else {
                     holder.heartIcon.setImageResource(R.drawable.ic_heart);
                 }
+
+                ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, "scaleX", 0.7f, 1.2f, 1.0f);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, "scaleY", 0.7f, 1.2f, 1.0f);
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.setDuration(300);
+                animatorSet.playTogether(scaleX, scaleY);
+                animatorSet.start();
 
                 Toast.makeText(context, newFavoriteStatus ? "Đã thêm vào yêu thích!" : "Đã xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
             }
