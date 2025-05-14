@@ -117,14 +117,14 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp" />
 
-        <!-- Facebook and Google Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
+            <!-- Facebook Button -->
             <LinearLayout
                 android:id="@+id/facebookButton"
                 android:layout_width="0dp"
@@ -132,9 +132,10 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:backgroundTint="@color/btnface"
                 android:background="@drawable/facebook_button_background"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -152,12 +153,12 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-
-
+            <!-- Space -->
             <Space
                 android:layout_width="16dp"
                 android:layout_height="0dp" />
 
+            <!-- Google Button -->
             <LinearLayout
                 android:id="@+id/googleButton"
                 android:layout_width="0dp"
@@ -165,9 +166,10 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:backgroundTint="@color/btngoogle"
                 android:background="@drawable/google_button_background"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -184,10 +186,8 @@
                     android:layout_marginStart="8dp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-
-
         </LinearLayout>
+
 
     </LinearLayout>
 

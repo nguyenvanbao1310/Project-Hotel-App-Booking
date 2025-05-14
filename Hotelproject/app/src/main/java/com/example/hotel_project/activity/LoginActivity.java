@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,12 @@ import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.LoginRequest;
 import com.example.hotel_project.model.LoginResponse;
 import com.example.hotel_project.retrofit.RetrofitClient;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private LoginApiService apiService;
     private TextView viewAsGuest;
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,18 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInput);
         loginButton = findViewById(R.id.loginButton);
         viewAsGuest = findViewById(R.id.viewAsGuest);
+//        LinearLayout googleButton = findViewById(R.id.googleButton);
+//
+//        //googleLoginButton = findViewById(R.id.googleButton);
+//        // Cấu hình Google Sign-In
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.default_web_client_id)) // Sử dụng Client ID từ Google Cloud
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//
+//        googleButton.setOnClickListener(v -> signInWithGoogle());
 
         apiService = RetrofitClient.getRetrofit().create(LoginApiService.class);
 
@@ -44,7 +66,37 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
+//    private void signInWithGoogle() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == RC_SIGN_IN) {
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            if (task.isSuccessful()) {
+//                GoogleSignInAccount account = task.getResult();
+//                // Đăng nhập thành công, có thể truy cập thông tin người dùng
+//                String idToken = account.getIdToken();
+//                handleSignIn(idToken);
+//            } else {
+//                // Đăng nhập thất bại
+//                Toast.makeText(this, "Google Sign-In failed", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    }
+//
+//    private void handleSignIn(String idToken) {
+//        // Gửi idToken lên backend hoặc xử lý theo cách bạn muốn
+//        // Ví dụ: Gửi lên Google Cloud để xác thực thêm hoặc lưu trữ thông tin
+//        Toast.makeText(this, "Đăng nhập thành công: " + idToken, Toast.LENGTH_SHORT).show();
+//        // Chuyển sang màn hình chính
+//        Intent intent = new Intent(LoginActivity.this, HotelActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
     private void performLogin() {
         String email = emailInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();

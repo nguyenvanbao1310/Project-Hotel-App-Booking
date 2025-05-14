@@ -16,5 +16,12 @@ public class BookingOrderService {
     public List<BookingOrderDTO> getBookingOrdersByAccountId(String accountId) {
         return bookingOrderRepository.findBookingOrdersWithHotelByAccountId(accountId);
     }
+    public void updatePaymentStatus(String idOrder, boolean status) {
+        bookingOrderRepository.findById(idOrder).ifPresent(bookingOrder -> {
+            bookingOrder.setStatus(status);
+            bookingOrderRepository.save(bookingOrder);
+        });
+    }
+
 
 }
