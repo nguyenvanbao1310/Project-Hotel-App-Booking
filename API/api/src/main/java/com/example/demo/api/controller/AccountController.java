@@ -10,9 +10,11 @@ import com.example.demo.api.enums.EnumRole;
 import com.example.demo.api.repository.AccountRepository;
 import com.example.demo.api.repository.PersonRepository;
 import com.example.demo.api.service.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -76,10 +78,22 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerAccount(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> registerAccount( @Valid @RequestBody RegisterRequest request,
+                                                   BindingResult result) {
+        // Kiểm tra lỗi validation
+        if (result.hasErrors()) {
+            // Lấy thông báo lỗi từ BindingResult và trả về cho người dùng
+            StringBuilder errorMessages = new StringBuilder();
+            result.getAllErrors().forEach(error -> {
+                errorMessages.append(error.getDefaultMessage()).append("\n");
+            });
+            return ResponseEntity.badRequest().body(errorMessages.toString());
+        }
+
         if (accountRepo.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Email đã tồn tại!");
         }
+
 
         String otp = otpService.generateOtp();
         String emailResponse = otpService.sendOtp(request.getEmail(), otp);
