@@ -31,4 +31,8 @@ public class HotelService {
     public List<Hotel> findHotelsByPriceRangeAndRating(double priceMin, double priceMax, float rating) {
         return hotelRepository.findHotelsByPriceRangeAndRating(priceMin, priceMax, rating);
     }
+
+    public List<Hotel> searchHotels(String keyword) {
+        return hotelRepository.searchHotelsByKeyword(keyword);
+    }
 }

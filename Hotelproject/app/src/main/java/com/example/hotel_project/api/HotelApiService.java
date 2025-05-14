@@ -22,4 +22,7 @@ public interface HotelApiService {
             @Query("priceMax") double priceMax,
             @Query("rating") float rating
     );
+
+    @GET("api/hotels/search")
+    Call<List<Hotel>> searchHotels(@Query("keyword") String keyword);
 }

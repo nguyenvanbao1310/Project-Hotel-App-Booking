@@ -56,11 +56,19 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".activity.HotelSearchActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".activity.MapsActivity"
             android:exported="true">
         </activity>
         <activity
             android:name=".activity.HotelFilterActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.FavouriteHotelsActivity"
             android:exported="true">
         </activity>
         <meta-data
