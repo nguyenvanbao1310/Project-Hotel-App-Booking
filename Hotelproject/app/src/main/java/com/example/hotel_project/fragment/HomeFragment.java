@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.hotel_project.R;
 import com.example.hotel_project.activity.HotelFilterActivity;
+import com.example.hotel_project.activity.HotelSearchActivity;
 import com.example.hotel_project.activity.MainActivity;
 import com.example.hotel_project.adapter.FilterPagerAdapter;
 import com.example.hotel_project.adapter.HotelAdapter;
@@ -32,6 +35,7 @@ import com.example.hotel_project.sharedprefs.SharedPreferencesManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +52,11 @@ public class HomeFragment extends Fragment {
     private List<Hotel> hotelList;
     private TextView textUserName;
 
+    private EditText editTextSearch;
+
     private ImageButton btnFilter;
+
+    private ImageView imgSearch;
 
     public HomeFragment() {
 
@@ -66,6 +74,9 @@ public class HomeFragment extends Fragment {
         textUserName.setText(guestDTO.getFullname());
 
         btnFilter = view.findViewById(R.id.btnFilter);
+
+        editTextSearch  = view.findViewById(R.id.editTextSearch);
+        imgSearch = view.findViewById(R.id.imgSearch);
 
 
         // Khởi tạo RecyclerView
@@ -154,6 +165,42 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String keyword = editTextSearch.getText().toString().trim();
+                if (!keyword.isEmpty()) {
+                    searchHotels(keyword);
+                }
+            }
+        });
+
         return view; // Đảm bảo trả về view sau khi các bước trên
     }
+
+    private void searchHotels(String keyword) {
+        HotelApiService apiService = RetrofitClient.getRetrofit().create(HotelApiService.class);
+        Call<List<Hotel>> call = apiService.searchHotels(keyword);
+        call.enqueue(new Callback<List<Hotel>>() {
+            @Override
+            public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Hotel> hotelList = response.body();
+                    Intent intent = new Intent(getActivity(), HotelSearchActivity.class);
+                    intent.putExtra("hotelList", (Serializable) hotelList);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(getActivity(), "Không tìm thấy khách sạn!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Hotel>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Lỗi kết nối máy chủ", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 }

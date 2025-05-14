@@ -25,4 +25,8 @@ public interface HotelRepository extends JpaRepository<Hotel, String> {
     List<Hotel> findHotelsByPriceRangeAndRating(@Param("priceMin") double priceMin,
                                                 @Param("priceMax") double priceMax,
                                                 @Param("rating") double rating);
+
+    @Query("SELECT h FROM Hotel h WHERE LOWER(h.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(h.address) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Hotel> searchHotelsByKeyword(@Param("keyword") String keyword);
+
 }

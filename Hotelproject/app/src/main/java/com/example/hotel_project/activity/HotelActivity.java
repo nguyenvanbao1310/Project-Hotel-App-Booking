@@ -56,6 +56,10 @@ public class HotelActivity extends AppCompatActivity {
             Intent intent = new Intent(HotelActivity.this, MapsActivity.class);
             startActivity(intent);
         });
+        tabFavourite.setOnClickListener(v -> {
+            Intent intent = new Intent(HotelActivity.this, FavouriteHotelsActivity.class);
+            startActivity(intent);
+        });
 
         if (savedInstanceState == null) {
             Fragment fragment = new HomeFragment();
