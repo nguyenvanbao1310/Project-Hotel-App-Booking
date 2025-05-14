@@ -4,4 +4,10 @@
         <item>By day</item>
         <item>By hour</item>
     </string-array>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string name="default_web_client_id">871454602397-go3c1odm441hd70g2qh57kkuhsqsr4hb.apps.googleusercontent.com</string>
 </resources>

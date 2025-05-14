@@ -56,4 +56,6 @@ dependencies {
     // Google Maps
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    // Google Sign-In
+    implementation ("com.google.android.gms:play-services-auth:20.1.0")
 }

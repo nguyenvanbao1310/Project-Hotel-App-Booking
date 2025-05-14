@@ -1,0 +1,23 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Gradient background -->
+    <gradient
+        android:startColor="@color/gradientStart"
+        android:endColor="@color/gradientEnd"
+        android:angle="45"/>
+
+    <!-- Chỉ bo tròn ở các góc dưới -->
+    <corners
+        android:bottomLeftRadius="80dp"
+        android:bottomRightRadius="80dp"/>
+
+    <!-- Viền (Stroke) -->
+    <stroke
+        android:color="@color/white"
+        android:width="4dp"/>
+
+    <!-- Bóng đổ -->
+    <solid android:color="@color/topBackground"/>
+
+</shape>

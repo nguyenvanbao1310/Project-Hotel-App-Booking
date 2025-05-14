@@ -21,4 +21,9 @@
     <color name="yellow">#FFEB3B</color>
     <color name="defaultTabColor">#2b74ff</color>
     <color name="defaultTextColor">#FFFFFFFF</color>
+    <color name="topBackground">#FFF8E1</color> <!-- Vàng nhạt -->
+    <color name="colorAccent">#FF5B6A</color>
+    <!-- Màu gradient -->
+    <color name="gradientStart">#FF9800</color>
+    <color name="gradientEnd">#FF5722</color>
 </resources>
