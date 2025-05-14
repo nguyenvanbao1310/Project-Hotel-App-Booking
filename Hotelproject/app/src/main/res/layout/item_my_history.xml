@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
+    android:layout_width="330dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="9dp"
     android:layout_marginTop="10dp"
@@ -12,7 +12,7 @@
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="240dp">
 
         <FrameLayout
@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/textName"
-            android:layout_width="165dp"
+            android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginStart="13dp"
             android:layout_marginTop="4dp"
@@ -67,7 +67,7 @@
 
         <TextView
             android:id="@+id/textAddress"
-            android:layout_width="165dp"
+            android:layout_width="150dp"
             android:layout_height="34dp"
             android:layout_marginStart="14dp"
             android:layout_marginTop="20dp"
@@ -148,7 +148,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBook"
-            android:layout_width="150dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="4dp"
@@ -162,8 +162,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddReview"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
             android:backgroundTint="#246AFB"

@@ -1,14 +1,19 @@
-package com.example.hotel_project.activity;
+package com.example.hotel_project.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.MyHistoryActivity;
+import com.example.hotel_project.adapter.CompletedBookingAdapter;
 import com.example.hotel_project.adapter.MyHistoryAdapter;
 import com.example.hotel_project.api.BookingOrderService;
 import com.example.hotel_project.model.AccountDTO;
@@ -22,46 +27,50 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyHistoryActivity extends AppCompatActivity {
+
+public class CompletedBookingFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    private MyHistoryAdapter myHistoryAdapter;
+    private CompletedBookingAdapter completedBookingAdapter;
 
     private AccountDTO accountDTO;
 
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_history);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_completed, container, false);
 
-        recyclerView = findViewById(R.id.list_my_history);
+        recyclerView = view.findViewById(R.id.recyclerComplete);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        accountDTO = SharedPreferencesManager.getAccountDTO(this);
+        accountDTO = SharedPreferencesManager.getAccountDTO(getActivity());
 
         BookingOrderService api = RetrofitClient.getRetrofit().create(BookingOrderService.class);
-        Call<List<BookingOrderDTO>> call = api.getBookingOrdersByAccountId(accountDTO.getId());
+        Call<List<BookingOrderDTO>> call = api.getCompleteBookingOrdersByAccountId(accountDTO.getId());
 
         call.enqueue(new Callback<List<BookingOrderDTO>>() {
             @Override
             public void onResponse(Call<List<BookingOrderDTO>> call, Response<List<BookingOrderDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<BookingOrderDTO> orders = response.body();
-                    myHistoryAdapter = new MyHistoryAdapter(MyHistoryActivity.this, orders);
-                    recyclerView.setAdapter(myHistoryAdapter);
+                    completedBookingAdapter = new CompletedBookingAdapter(getActivity(), orders);
+                    recyclerView.setAdapter(completedBookingAdapter);
                 } else {
-                    Toast.makeText(MyHistoryActivity.this, "Không có dữ liệu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Không có dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<BookingOrderDTO>> call, Throwable t) {
                 Log.e("API_ERROR", "Lỗi gọi API: " + t.getMessage());
-                Toast.makeText(MyHistoryActivity.this, "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
             }
         });
+        return view;
     }
+
 }

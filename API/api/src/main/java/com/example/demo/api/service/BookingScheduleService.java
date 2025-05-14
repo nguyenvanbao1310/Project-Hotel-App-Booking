@@ -9,6 +9,7 @@ import com.example.demo.api.repository.BookingScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class BookingScheduleService {
 
     // Phương thức để lấy tất cả BookingSchedule của account_id
     public List<BookingScheduleDTO> getBookingSchedulesByAccountId(String accountId) {
-        List<BookingSchedule> bookingSchedules = bookingScheduleRepository.findByAccountBook_Id(accountId);
+        List<BookingSchedule> bookingSchedules = bookingScheduleRepository.findByAccountBook_IdAndDateEndAfter(accountId, LocalDateTime.now());
 
         return bookingSchedules.stream().map(bookingSchedule -> {
             BookingScheduleDTO dto = new BookingScheduleDTO();

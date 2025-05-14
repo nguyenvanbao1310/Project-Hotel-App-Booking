@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="My History"
+                android:text="My Booking"
                 android:textColor="@color/text_primary"
                 android:textFontWeight="400"
                 android:textSize="24sp"
