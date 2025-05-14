@@ -27,6 +27,7 @@ public class Room {
     private Hotel hotel;
 
     @OneToMany(mappedBy = "roomBook")
+    @JsonIgnore
     private List<BookingSchedule> bookingSchedules;
 
     @OneToMany(mappedBy = "roomOrder")
