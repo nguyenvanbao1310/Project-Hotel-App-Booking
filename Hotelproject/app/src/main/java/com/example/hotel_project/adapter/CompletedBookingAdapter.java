@@ -15,40 +15,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
 import com.example.hotel_project.activity.HotelDetailActivity;
-import com.example.hotel_project.activity.MyHistoryActivity;
 import com.example.hotel_project.activity.WriteReviewActivity;
 import com.example.hotel_project.model.BookingOrderDTO;
-import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.retrofit.RetrofitClient;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.HotelViewHolder>{
+public class CompletedBookingAdapter extends RecyclerView.Adapter<CompletedBookingAdapter.HotelViewHolder>{
     private List<BookingOrderDTO> bookingOrderDTO;
     private Context context;
 
-    public MyHistoryAdapter(Context context, List<BookingOrderDTO> bookingOrderDTO) {
+    public CompletedBookingAdapter(Context context, List<BookingOrderDTO> bookingOrderDTO) {
         this.context = context;
         this.bookingOrderDTO = bookingOrderDTO;
     }
 
     @NonNull
     @Override
-    public MyHistoryAdapter.HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_completed_booking, parent, false);
-        return new MyHistoryAdapter.HotelViewHolder(view);
+    public CompletedBookingAdapter.HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_my_history, parent, false);
+        return new CompletedBookingAdapter.HotelViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHistoryAdapter.HotelViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CompletedBookingAdapter.HotelViewHolder holder, int position) {
         BookingOrderDTO bookingOrder= bookingOrderDTO.get(position);
         holder.textName.setText(bookingOrder.getHotelOrder().getName());
-        holder.textAddress.setText(bookingOrder.getHotelOrder().getAddress());
-        holder.textHotelCity.setText(bookingOrder.getHotelOrder().getCity());
+        holder.textAddress.setText(bookingOrder.getHotelOrder().getAddress() + ", " + bookingOrder.getHotelOrder().getCity());
 
-        String dateStartStr = bookingOrder.getDateStart();
+        String dateStartStr = bookingOrder.getDateStart();  // Giả sử đây là chuỗi ngày như "2025-04-01T14:00:00"
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime dateStart = LocalDateTime.parse(dateStartStr, inputFormatter);
 
@@ -56,7 +53,7 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
         String formattedDate = dateStart.format(outputFormatter);
         holder.textDateStart.setText("Checkin: " + formattedDate);
 
-        String dateStartEnd = bookingOrder.getDateEnd();
+        String dateStartEnd = bookingOrder.getDateEnd();  // Giả sử đây là chuỗi ngày như "2025-04-01T14:00:00"
         DateTimeFormatter inputFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         LocalDateTime dateEnd = LocalDateTime.parse(dateStartEnd, inputFormatter1);
 
@@ -80,6 +77,11 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
             context.startActivity(intent);
         });
 
+        holder.btnAddReview.setOnClickListener(v -> {
+            Intent intent = new Intent(context, WriteReviewActivity.class);
+            intent.putExtra("bookingOrder", bookingOrder);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -89,18 +91,18 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
 
     static class HotelViewHolder extends RecyclerView.ViewHolder {
         ImageView imageHotel;
-        TextView textName, textHotelCity, textDuration, textAddress, textDateStart, textDateEnd;
+        TextView textName, textAddress, textDateStart, textDateEnd;
+        Button btnBook, btnAddReview;
 
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageHotel = itemView.findViewById(R.id.imgHotel);
-            textName = itemView.findViewById(R.id.txtHotelName);
-            textHotelCity = itemView.findViewById(R.id.txtHotelCity);
-            textAddress = itemView.findViewById(R.id.txtAddress);
-            textDateStart = itemView.findViewById(R.id.txtCheckIn);
-            textDateEnd = itemView.findViewById(R.id.txtCheckOut);
-            textDuration = itemView.findViewById(R.id.txtDuration);
+            imageHotel = itemView.findViewById(R.id.imageHotel);
+            textName = itemView.findViewById(R.id.textName);
+            textAddress = itemView.findViewById(R.id.textAddress);
+            btnBook = itemView.findViewById(R.id.btnBook);
+            btnAddReview = itemView.findViewById(R.id.btnAddReview);
+            textDateStart = itemView.findViewById(R.id.textCheckIn);
+            textDateEnd = itemView.findViewById(R.id.textCheckOut);
         }
     }
-
 }

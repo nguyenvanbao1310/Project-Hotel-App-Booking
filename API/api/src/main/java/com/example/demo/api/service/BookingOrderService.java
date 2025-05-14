@@ -17,4 +17,12 @@ public class BookingOrderService {
         return bookingOrderRepository.findBookingOrdersWithHotelByAccountId(accountId);
     }
 
+    public List<BookingOrderDTO> getCompleteBookingOrdersByAccountId(String accountId) {
+        return bookingOrderRepository.findCompletedBookingOrdersByAccountId(accountId);
+    }
+
+    public List<BookingOrderDTO> getCancelledBookingOrdersByAccountId(String accountId) {
+        return bookingOrderRepository.findCancelledBookingOrdersByAccountId(accountId);
+    }
+
 }

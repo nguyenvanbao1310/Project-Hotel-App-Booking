@@ -22,4 +22,16 @@ public class BookingOrderController {
     public List<BookingOrderDTO> getBookingOrders(@PathVariable String accountId) {
         return bookingOrderService.getBookingOrdersByAccountId(accountId);
     }
+
+    @GetMapping("/booking-complete/{accountId}")
+    public List<BookingOrderDTO> getCompleteBookingOrders(@PathVariable String accountId) {
+        return bookingOrderService.getCompleteBookingOrdersByAccountId(accountId);
+    }
+
+    @GetMapping("/booking-cancelled/{accountId}")
+    public List<BookingOrderDTO> getCancelledBookingOrders(@PathVariable String accountId) {
+        return bookingOrderService.getCancelledBookingOrdersByAccountId(accountId);
+    }
+
+
 }
