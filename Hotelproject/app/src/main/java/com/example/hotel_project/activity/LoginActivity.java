@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private Button loginButton;
     private LoginApiService apiService;
+    private TextView viewAsGuest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +33,16 @@ public class LoginActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginButton = findViewById(R.id.loginButton);
+        viewAsGuest = findViewById(R.id.viewAsGuest);
 
         apiService = RetrofitClient.getRetrofit().create(LoginApiService.class);
 
         loginButton.setOnClickListener(v -> performLogin());
+        // Khi nhấn "Don't have an account?", chuyển sang màn hình đăng ký
+        viewAsGuest.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void performLogin() {

@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="350dp"
-        android:layout_height="606dp"
+        android:layout_width="336dp"
+        android:layout_height="860dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="36dp"
@@ -19,10 +19,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002">
+        app:layout_constraintVertical_bias="0.069">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -66,10 +66,10 @@
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
-                app:srcCompat="@drawable/ic_gender"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:srcCompat="@drawable/ic_gender" />
 
             <Spinner
                 android:id="@+id/spinnerGender"
@@ -78,10 +78,10 @@
                 android:layout_marginStart="5dp"
                 android:entries="@array/gender_array"
                 android:spinnerMode="dropdown"
-                app:layout_constraintStart_toEndOf="@+id/imgGender"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgGender"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Address -->
@@ -95,10 +95,10 @@
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
-                app:srcCompat="@drawable/ic_address"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:srcCompat="@drawable/ic_address" />
 
             <EditText
                 android:id="@+id/txtAddress"
@@ -107,10 +107,10 @@
                 android:layout_marginStart="5dp"
                 android:hint="Address"
                 android:inputType="textPostalAddress"
-                app:layout_constraintStart_toEndOf="@+id/imgAddress"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgAddress"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- CCCD -->
@@ -124,10 +124,10 @@
                 android:layout_width="32dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
-                app:srcCompat="@drawable/icccd"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:srcCompat="@drawable/icccd" />
 
             <EditText
                 android:id="@+id/txtCCCD"
@@ -137,10 +137,10 @@
                 android:hint="CCCD/CMND"
                 android:inputType="number"
                 android:maxLength="12"
-                app:layout_constraintStart_toEndOf="@+id/imgCCCD"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgCCCD"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,35 +257,77 @@
             android:layout_height="96dp"
             android:layout_margin="15dp">
 
-            <Button
-                android:id="@+id/btnSubmit"
-                android:layout_width="140dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="19dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="27dp"
-                android:backgroundTint="@color/btnface"
-                android:text="Facebook"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnChange"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <!-- Facebook and Google Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnChange"
-                android:layout_width="140dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="19dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="27dp"
-                android:backgroundTint="@color/btngoogle"
-                android:text="Google"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnSubmit"
-                app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:id="@+id/facebookButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:backgroundTint="@color/btnface"
+                    android:background="@drawable/facebook_button_background"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_facebook"
+                        android:contentDescription="Facebook icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Facebook"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="0dp" />
+
+                <LinearLayout
+                    android:id="@+id/googleButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:backgroundTint="@color/btngoogle"
+                    android:background="@drawable/google_button_background"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_google"
+                        android:contentDescription="Google icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Google"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_marginStart="8dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
