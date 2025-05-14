@@ -137,23 +137,29 @@ public class AccountController {
         return ResponseEntity.ok("Đăng ký thành công!");
     }
     @PostMapping("/resend-otp")
-    public ResponseEntity<String> resendOtp(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, String>> resendOtp(@RequestBody Map<String, String> request) {
         String email = request.get("email");
 
+        Map<String, String> response = new HashMap<>();
+
         if (email == null || email.isEmpty()) {
-            return ResponseEntity.badRequest().body("Email không được để trống");
+            response.put("message", "Email không được để trống");
+            return ResponseEntity.badRequest().body(response);
         }
 
         String newOtp = otpService.generateOtp();
         String result = otpService.sendOtp(email, newOtp);
 
         if ("Success".equals(result)) {
-            otpService.saveOtpForVerification(email, newOtp); // Ghi đè OTP cũ bằng OTP mới
-            return ResponseEntity.ok("Mã OTP mới đã được gửi thành công");
+            otpService.saveOtpForVerification(email, newOtp);
+            response.put("message", "Mã OTP mới đã được gửi thành công");
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Gửi email thất bại");
+            response.put("message", "Gửi email thất bại");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
 
     // Hàm sinh ID
     private String generateAccountId() {

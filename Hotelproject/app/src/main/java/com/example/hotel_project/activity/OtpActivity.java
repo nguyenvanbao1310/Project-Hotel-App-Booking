@@ -46,6 +46,8 @@ public class OtpActivity extends AppCompatActivity {
 
         // Lấy email từ màn hình trước
         email = getIntent().getStringExtra("email");
+        // Gọi hàm này để tự động chuyển focus
+        setupOtpInputs();
 
         btnVerify.setOnClickListener(v -> {
             // Lấy giá trị OTP từ 4 ô nhập
@@ -111,6 +113,11 @@ public class OtpActivity extends AppCompatActivity {
                     finish(); // Đóng màn hình OTP
                 } else {
                     Toast.makeText(OtpActivity.this, "Mã OTP không chính xác", Toast.LENGTH_SHORT).show();
+                    txtOtp1.setText("");
+                    txtOtp2.setText("");
+                    txtOtp3.setText("");
+                    txtOtp4.setText("");
+                    txtOtp1.requestFocus();
                 }
             }
 
@@ -120,5 +127,35 @@ public class OtpActivity extends AppCompatActivity {
             }
         });
     }
+    private void setupOtpInputs() {
+        txtOtp1.addTextChangedListener(new GenericTextWatcher(txtOtp1, txtOtp2));
+        txtOtp2.addTextChangedListener(new GenericTextWatcher(txtOtp2, txtOtp3));
+        txtOtp3.addTextChangedListener(new GenericTextWatcher(txtOtp3, txtOtp4));
+        txtOtp4.addTextChangedListener(new GenericTextWatcher(txtOtp4, null));
+    }
+
+    private class GenericTextWatcher implements android.text.TextWatcher {
+        private final EditText currentView;
+        private final EditText nextView;
+
+        public GenericTextWatcher(EditText currentView, EditText nextView) {
+            this.currentView = currentView;
+            this.nextView = nextView;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.length() == 1 && nextView != null) {
+                nextView.requestFocus();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(android.text.Editable s) {}
+    }
+
 }
 
