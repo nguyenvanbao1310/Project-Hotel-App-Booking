@@ -6,18 +6,39 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- RecyclerView cho hình ảnh -->
+    <!-- ViewPager cho hình ảnh -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerImages"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:scaleType="centerCrop"
         android:layout_marginBottom="12dp" />
 
-    <!-- TextView cho mô tả -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewExtensions"
+    <!-- Phần chứa 2 RecyclerView: Info và Extension -->
+    <LinearLayout
+        android:id="@+id/info_extension_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle">
+
+        <!-- Cột trái: Room Info -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewRoomInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false" />
+
+        <!-- Cột phải: Extensions -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewExtensions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:nestedScrollingEnabled="false" />
+    </LinearLayout>
 </LinearLayout>

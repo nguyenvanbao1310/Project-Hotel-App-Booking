@@ -115,7 +115,7 @@
             android:exported="true">
         </activity>
         <activity
-            android:name=".activity.ChangePasswordActivity"
+            android:name=".activity.SettingActivity"
             android:exported="true">
         </activity>
         <activity

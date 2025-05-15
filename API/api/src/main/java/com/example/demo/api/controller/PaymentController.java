@@ -113,7 +113,5 @@ public class PaymentController {
         return calculatedHash.equals(vnp_SecureHash);
     }
 
-
-
 }
 

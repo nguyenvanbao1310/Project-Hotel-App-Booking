@@ -94,29 +94,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frame_img" />
 
-        <TextView
-            android:id="@+id/textStar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="12dp"
-            android:drawableStart="@drawable/ic_star"
-            android:drawablePadding="8dp"
-            android:text="4.5"
-            android:textColor="@color/text_sliver"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frame_img" />
 
         <TextView
-            android:id="@+id/textStar2"
+            android:id="@+id/textRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="168dp"
             android:layout_marginTop="12dp"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="8dp"
-            android:text="4.5"
+            android:text=""
             android:textColor="@color/text_sliver"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"

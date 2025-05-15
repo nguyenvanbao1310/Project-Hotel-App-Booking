@@ -50,7 +50,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/circle_white"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_avatar" />
+            android:src="@drawable/img_avatar" />
 
         <!-- Form Fields -->
         <TextView android:text="FullName"
