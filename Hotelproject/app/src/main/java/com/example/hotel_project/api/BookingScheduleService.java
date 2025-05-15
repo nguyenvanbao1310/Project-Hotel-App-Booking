@@ -12,4 +12,7 @@ public interface BookingScheduleService {
     @GET("api/bookingschedules/{accountId}")
     Call<List<BookingScheduleDTO>> getBookingSchedules(@Path("accountId") String accountId);
 
+    @GET("api/bookingschedules/rooms/{roomId}")
+    Call<List<BookingScheduleDTO>> getBookingSchedulesByRoomId(@Path("roomId") String roomId);
+
 }

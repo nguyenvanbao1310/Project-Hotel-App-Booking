@@ -21,4 +21,9 @@ public class BookingScheduleController {
     public List<BookingScheduleDTO> getBookingSchedulesByAccountId(@PathVariable String accountId) {
         return bookingScheduleService.getBookingSchedulesByAccountId(accountId);
     }
+
+    @GetMapping("/rooms/{roomId}")
+    public List<BookingScheduleDTO> getBookingSchedulesByRoomId(@PathVariable String roomId) {
+        return bookingScheduleService.getBookingSchedulesByRoomId(roomId);
+    }
 }

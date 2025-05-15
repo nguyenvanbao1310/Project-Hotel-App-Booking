@@ -28,6 +28,8 @@ public class PaymentActivity extends AppCompatActivity {
     private RadioButton radioCod, radioVnpay;
     private PaymentApiService paymentApiService;
 
+    private int totalPrice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,8 @@ public class PaymentActivity extends AppCompatActivity {
         handleIntent(getIntent());
 
         // Ánh xạ các view
+        Intent intent = getIntent();
+        totalPrice = intent.getIntExtra("totalPrice", 0);
         btnPayment = findViewById(R.id.btn_payment);
         btnComplete = findViewById(R.id.btn_checkout);
         radioCod = findViewById(R.id.radio_cod);
@@ -51,7 +55,7 @@ public class PaymentActivity extends AppCompatActivity {
             if (radioVnpay.isChecked()) {
                 // Tạo đối tượng PaymentDTO
                 PaymentDTO paymentDTO = new PaymentDTO();
-                paymentDTO.setAmount(120000);  // Ví dụ giá trị, thay bằng giá trị thực tế
+                paymentDTO.setAmount(totalPrice);  // Ví dụ giá trị, thay bằng giá trị thực tế
                 paymentDTO.setOrderDescription("Hotel booking payment");
 
 
@@ -95,7 +99,6 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
         // Kiểm tra kết quả thanh toán từ VNPAY sau khi người dùng quay lại ứng dụng
-        Intent intent = getIntent();
         Uri data = intent.getData();
         if (data != null && "yourapp".equals(data.getScheme()) && "payment".equals(data.getHost())) {
             String txnRef = data.getQueryParameter("txnRef");

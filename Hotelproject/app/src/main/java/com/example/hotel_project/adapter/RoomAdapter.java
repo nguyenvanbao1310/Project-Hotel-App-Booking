@@ -1,5 +1,6 @@
 package com.example.hotel_project.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotel_project.R;
+import com.example.hotel_project.api.BookingScheduleService;
 import com.example.hotel_project.dialog.BookingDialog;
 import com.example.hotel_project.dialog.RoomDescriptionDialog;
+import com.example.hotel_project.model.BookingScheduleDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
+import com.example.hotel_project.retrofit.RetrofitClient;
 
+import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
 
@@ -65,13 +74,37 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     }
 
     private void showBookingDialog(RoomDTO room) {
-        BookingDialog dialog = BookingDialog.newInstance(hotel, room);
 
-        dialog.setBookingListener(message -> {
-            Toast.makeText(fragment.getContext(), message, Toast.LENGTH_LONG).show();
+        BookingScheduleService apiService = RetrofitClient.getRetrofit().create(BookingScheduleService.class);
+        Call<List<BookingScheduleDTO>> call = apiService.getBookingSchedulesByRoomId(room.getId());
+        call.enqueue(new Callback<List<BookingScheduleDTO>>() {
+            @Override
+            public void onResponse(Call<List<BookingScheduleDTO>> call, Response<List<BookingScheduleDTO>> response) {
+                if (response.isSuccessful()) {
+                    List<BookingScheduleDTO> bookingScheduleDTO = response.body();
+                    BookingDialog dialog = BookingDialog.newInstance(hotel, room, bookingScheduleDTO );
+                    dialog.setBookingListener(message -> {
+                        Toast.makeText(fragment.getContext(), message, Toast.LENGTH_LONG).show();
+                    });
+
+                    dialog.show(fragment.getParentFragmentManager(), "BookingDialog");
+                } else {
+                    try {
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "null";
+                        Log.e("BookingSchedule", "Error response: " + response.code() + " - " + errorBody);
+                    } catch (IOException e) {
+                        Log.e("BookingSchedule", "Error parsing errorBody", e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<BookingScheduleDTO>> call, Throwable t) {
+                Log.e("BookingSchedule", "API Failure: ", t);
+            }
         });
 
-        dialog.show(fragment.getParentFragmentManager(), "BookingDialog");
+
     }
 
     public static class RoomViewHolder extends RecyclerView.ViewHolder {
