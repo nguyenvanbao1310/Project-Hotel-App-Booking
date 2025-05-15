@@ -183,8 +183,6 @@ public class BookingDialog extends BottomSheetDialogFragment {
                     return;
                 }
 
-
-
                 message = "Book \"" + room.getRoomType() + "\"\nFrom: " + checkIn + "\nTo: " + checkOut;
 
                 intent.putExtra("checkIn", checkIn);
