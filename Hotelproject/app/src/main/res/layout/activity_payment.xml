@@ -107,7 +107,7 @@
         android:id="@+id/amount_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="120.000đ"
+        android:text="120000VND"
         android:textStyle="bold"
         android:textSize="14sp"
         app:layout_constraintTop_toTopOf="@id/label_total_price"

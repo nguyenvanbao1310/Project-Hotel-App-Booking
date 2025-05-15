@@ -13,12 +13,14 @@ import com.example.hotel_project.R;
 import com.example.hotel_project.api.PaymentApiService;
 import com.example.hotel_project.model.PaymentDTO;
 import com.example.hotel_project.model.ResponseObject;
+import com.example.hotel_project.retrofit.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import android.util.Log;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -31,6 +33,9 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        // Xử lý intent khi mở activity
+        handleIntent(getIntent());
+
         // Ánh xạ các view
         btnPayment = findViewById(R.id.btn_payment);
         btnComplete = findViewById(R.id.btn_checkout);
@@ -38,11 +43,8 @@ public class PaymentActivity extends AppCompatActivity {
         radioVnpay = findViewById(R.id.radio_vnpay);
 
         // Khởi tạo Retrofit và PaymentApiService
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080/") // Cập nhật với URL API của bạn
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        paymentApiService = retrofit.create(PaymentApiService.class);
+        paymentApiService = RetrofitClient.getRetrofit().create(PaymentApiService.class);
+
 
         // Khi người dùng nhấn nút "Payment"
         btnPayment.setOnClickListener(v -> {
@@ -51,6 +53,8 @@ public class PaymentActivity extends AppCompatActivity {
                 PaymentDTO paymentDTO = new PaymentDTO();
                 paymentDTO.setAmount(120000);  // Ví dụ giá trị, thay bằng giá trị thực tế
                 paymentDTO.setOrderDescription("Hotel booking payment");
+
+
 
                 // Gửi yêu cầu tạo URL thanh toán
                 paymentApiService.createVNPayUrl(paymentDTO).enqueue(new Callback<ResponseObject<String>>() {
@@ -105,6 +109,50 @@ public class PaymentActivity extends AppCompatActivity {
                 Toast.makeText(this, "Thanh toán thất bại (code: " + responseCode + ")", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // Xử lý intent khi activity đã chạy rồi
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        Uri data = intent.getData();
+        if (data != null && "yourapp".equals(data.getScheme()) && "payment".equals(data.getHost())) {
+            String txnRef = data.getQueryParameter("txnRef");
+            String responseCode = data.getQueryParameter("responseCode");
+
+            if (responseCode != null) {
+                if ("00".equals(responseCode)) {
+                    showPaymentSuccess(txnRef);
+                } else {
+                    showPaymentFailure(responseCode);
+                }
+            } else if (data.getQueryParameter("error") != null) {
+                showPaymentError(data.getQueryParameter("error"));
+            }
+        }
+    }
+
+    private void showPaymentSuccess(String txnRef) {
+        runOnUiThread(() -> {
+            Toast.makeText(this, "Thanh toán thành công - Cảm ơn quý khách " , Toast.LENGTH_LONG).show();
+            // Cập nhật UI tại đây
+            btnComplete.setEnabled(true);
+        });
+    }
+
+    private void showPaymentFailure(String errorCode) {
+        runOnUiThread(() -> {
+            Toast.makeText(this, "Thanh toán thất bại. Mã lỗi: " + errorCode, Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void showPaymentError(String error) {
+        runOnUiThread(() -> {
+            Toast.makeText(this, "Lỗi xác thực: " + error, Toast.LENGTH_LONG).show();
+        });
     }
 }
 

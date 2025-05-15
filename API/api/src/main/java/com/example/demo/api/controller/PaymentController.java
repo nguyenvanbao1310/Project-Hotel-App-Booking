@@ -35,14 +35,21 @@ public class PaymentController {
     @PostMapping("/create_payment_url")
     public ResponseEntity<ResponseObject> createPayment(@RequestBody PaymentDTO paymentRequest, HttpServletRequest request) {
         try {
+            // Trước khi tạo payment URL
+            if (paymentRequest.getOrderInfo() == null) {
+                paymentRequest.setOrderInfo("Payment for order");
+            }
             // Tạo URL thanh toán với các thông tin từ paymentRequest
             String paymentUrl = vnPayService.createPaymentUrl(paymentRequest, request);
+            // ✅ Log ra URL để kiểm tra
+            System.out.println("Redirecting to VNPay URL: " + paymentUrl);
 
             return ResponseEntity.ok(ResponseObject.builder()
                     .status(HttpStatus.OK)
                     .message("Payment URL generated successfully.")
                     .data(paymentUrl)
                     .build());
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ResponseObject.builder()
@@ -84,8 +91,6 @@ public class PaymentController {
     // Phương thức kiểm tra checksum từ phản hồi của VNPay
     private boolean verifyChecksum(HttpServletRequest request) {
         Map<String, String> fields = new HashMap<>();
-
-        // Lấy tất cả tham số từ request
         Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
@@ -98,13 +103,13 @@ public class PaymentController {
             }
         }
 
-        // Lấy mã bảo mật từ response
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
-
-        // Tính toán mã bảo mật từ các tham số
         String calculatedHash = vnPayUtils.hashAllFields(fields);
 
-        // So sánh mã bảo mật tính toán với mã bảo mật nhận được
+        // Optional: log to debug
+        System.out.println("Expected Hash: " + calculatedHash);
+        System.out.println("Received Hash: " + vnp_SecureHash);
+
         return calculatedHash.equals(vnp_SecureHash);
     }
 

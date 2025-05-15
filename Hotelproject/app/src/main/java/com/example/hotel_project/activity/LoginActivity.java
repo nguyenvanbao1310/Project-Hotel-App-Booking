@@ -2,6 +2,7 @@ package com.example.hotel_project.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hotel_project.R;
 import com.example.hotel_project.api.LoginApiService;
 import com.example.hotel_project.model.AccountDTO;
+import com.example.hotel_project.model.GuestDTO;
 import com.example.hotel_project.model.LoginRequest;
 import com.example.hotel_project.model.LoginResponse;
 import com.example.hotel_project.retrofit.RetrofitClient;
+import com.example.hotel_project.sharedprefs.SharedPreferencesManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -113,8 +116,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    // Chuyển sang HotelActivity
+                    LoginResponse loginResponse = response.body();
+                    AccountDTO account = loginResponse.getAccount();
+                    GuestDTO guest = loginResponse.getGuest(); // giả sử API trả về GuestDTO
+                    Log.d("LoginDebug", "Account: " + account);
+                    Log.d("LoginDebug", "Guest from API: " + guest);
+                    if (guest != null) {
+                        SharedPreferencesManager.saveGuestDTO(LoginActivity.this, guest);
+                    } else {
+                        Log.d("LoginDebug", "Guest is null, không lưu được.");
+                    }
+
+                    SharedPreferencesManager.saveAccountDTO(LoginActivity.this, account);
+                    SharedPreferencesManager.saveGuestDTO(LoginActivity.this, guest); // Lưu GuestDTO
+
+                    Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, HotelActivity.class);
                     startActivity(intent);
                     finish();
@@ -126,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
