@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface BookingScheduleRepository extends JpaRepository<BookingSchedule, String> {
     List<BookingSchedule> findByAccountBook_IdAndDateEndAfter(String accountId, LocalDateTime now);
+
+    List<BookingSchedule> findByRoomBook_Id(String roomId);
 }

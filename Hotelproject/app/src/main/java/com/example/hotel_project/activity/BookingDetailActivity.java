@@ -1,6 +1,9 @@
 package com.example.hotel_project.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +46,8 @@ public class BookingDetailActivity extends AppCompatActivity {
 
     private Hotel hotel;
 
+    private Button btnSubmit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,7 @@ public class BookingDetailActivity extends AppCompatActivity {
         txtVatFee = findViewById(R.id.txtVatFee);
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
         txtTotalPriceBottom = findViewById(R.id.txtTotalPriceBottom);
+        btnSubmit = findViewById(R.id.btnSubmit);
 
         String Url = RetrofitClient.IMG_URL + hotel.getHotel_image_url();
         Glide.with(this)
@@ -127,6 +133,16 @@ public class BookingDetailActivity extends AppCompatActivity {
         txtVatFee.setText(String.format(Locale.getDefault(), "%.0fđ", priceVat));
         txtTotalPrice.setText(String.format(Locale.getDefault(), "%.0fđ", totalPrice));
         txtTotalPriceBottom.setText(String.format(Locale.getDefault(), "%.0fđ", totalPrice));
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BookingDetailActivity.this, PaymentActivity.class);
+                int totalPriceInt = (int) totalPrice;
+                intent.putExtra("totalPrice", totalPriceInt );
+                startActivity(intent);
+            }
+        });
 
 
 

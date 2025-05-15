@@ -20,15 +20,24 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.hotel_project.R;
 import com.example.hotel_project.activity.BookingDetailActivity;
+import com.example.hotel_project.model.BookingScheduleDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class BookingDialog extends BottomSheetDialogFragment {
 
@@ -41,15 +50,17 @@ public class BookingDialog extends BottomSheetDialogFragment {
 
     private Hotel hotel;
 
-    public static BookingDialog newInstance(Hotel hotel, RoomDTO room) {
+    private List<BookingScheduleDTO> bookingScheduleDTOList;
+
+    public static BookingDialog newInstance(Hotel hotel, RoomDTO room, List<BookingScheduleDTO> bookingScheduleDTOList) {
         BookingDialog dialog = new BookingDialog();
         Bundle args = new Bundle();
         args.putSerializable("room", room);   // RoomDTO implements Serializable
         args.putSerializable("hotel", hotel); // Hotel also must implement Serializable
+        args.putSerializable("bookedSchedules", (Serializable) bookingScheduleDTOList);
         dialog.setArguments(args);
         return dialog;
     }
-
     public void setBookingListener(BookingListener listener) {
         this.bookingListener = listener;
     }
@@ -63,6 +74,8 @@ public class BookingDialog extends BottomSheetDialogFragment {
         if (getArguments() != null) {
             room = (RoomDTO) getArguments().getSerializable("room");
             hotel = (Hotel) getArguments().getSerializable("hotel");
+            bookingScheduleDTOList = (List<BookingScheduleDTO>) getArguments().getSerializable("bookedSchedules");
+
         }
 
         Spinner spinnerBookingType = view.findViewById(R.id.spinnerBookingType);
@@ -122,8 +135,9 @@ public class BookingDialog extends BottomSheetDialogFragment {
         });
 
         // Open DatePicker when textCheckIn is clicked
-        textCheckIn.setOnClickListener(v -> showDatePickerDialog(textCheckIn));
-        textCheckOut.setOnClickListener(v -> showDatePickerDialog(textCheckOut));
+        textCheckIn.setOnClickListener(v -> showMaterialDatePickerDialog(textCheckIn));
+        textCheckOut.setOnClickListener(v -> showMaterialDatePickerDialog(textCheckOut));
+
 
         // Confirm booking button
         btnConfirmBooking.setOnClickListener(v -> {
@@ -175,24 +189,87 @@ public class BookingDialog extends BottomSheetDialogFragment {
         });
         return view;
     }
+    private void showMaterialDatePickerDialog(final TextView textView) {
+        Set<Long> disabledDates = getDisabledDates();
 
-    private void showDatePickerDialog(final TextView textView) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setValidator(new DateValidatorExclude(disabledDates));
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                requireContext(),
-                (view, year1, monthOfYear, dayOfMonth) -> {
-                    Calendar selectedDate = Calendar.getInstance();
-                    selectedDate.set(year1, monthOfYear, dayOfMonth);
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Chọn ngày")
+                .setCalendarConstraints(constraintsBuilder.build())
+                .build();
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    textView.setText(sdf.format(selectedDate.getTime()));
-                },
-                year, month, day);
+        datePicker.show(getParentFragmentManager(), "MATERIAL_DATE_PICKER");
 
-        datePickerDialog.show();
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            // selection là timestamp ngày chọn UTC
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String dateStr = sdf.format(new Date(selection));
+            textView.setText(dateStr);
+        });
+    }
+
+    // Hàm kiểm tra 1 ngày có nằm trong bất kỳ khoảng đã book nào không
+    private boolean isDateBooked(Calendar date) {
+        if (bookingScheduleDTOList == null) return false;
+
+        // Chuẩn hóa ngày chỉ còn ngày tháng năm (bỏ giờ phút giây)
+        Calendar dayToCheck = (Calendar) date.clone();
+        dayToCheck.set(Calendar.HOUR_OF_DAY, 0);
+        dayToCheck.set(Calendar.MINUTE, 0);
+        dayToCheck.set(Calendar.SECOND, 0);
+        dayToCheck.set(Calendar.MILLISECOND, 0);
+
+        for (BookingScheduleDTO schedule : bookingScheduleDTOList) {
+            Date startDate = Date.from(schedule.getDateStart().atZone(ZoneId.systemDefault()).toInstant());
+            Date endDate = Date.from(schedule.getDateEnd().atZone(ZoneId.systemDefault()).toInstant());
+
+            Calendar start = Calendar.getInstance();
+            start.setTime(startDate);
+            start.set(Calendar.HOUR_OF_DAY, 0);
+            start.set(Calendar.MINUTE, 0);
+            start.set(Calendar.SECOND, 0);
+            start.set(Calendar.MILLISECOND, 0);
+
+            Calendar end = Calendar.getInstance();
+            end.setTime(endDate);
+            end.set(Calendar.HOUR_OF_DAY, 0);
+            end.set(Calendar.MINUTE, 0);
+            end.set(Calendar.SECOND, 0);
+            end.set(Calendar.MILLISECOND, 0);
+
+            // Kiểm tra nếu ngày nằm trong khoảng từ start đến end (bao gồm cả 2 đầu)
+            if (!dayToCheck.before(start) && !dayToCheck.after(end)) {
+                return true; // Ngày đã bị đặt rồi
+            }
+        }
+        return false; // Ngày chưa bị đặt
+    }
+
+    private Set<Long> getDisabledDates() {
+        Set<Long> disabledDates = new HashSet<>();
+
+        if (bookingScheduleDTOList == null) return disabledDates;
+
+        for (BookingScheduleDTO schedule : bookingScheduleDTOList) {
+            Calendar start = Calendar.getInstance();
+            start.setTime(Date.from(schedule.getDateStart().atZone(ZoneId.systemDefault()).toInstant()));
+            start.set(Calendar.HOUR_OF_DAY, 0);
+            start.set(Calendar.MINUTE, 0);
+            start.set(Calendar.SECOND, 0);
+            start.set(Calendar.MILLISECOND, 0);
+            Calendar end = Calendar.getInstance();
+            end.setTime(Date.from(schedule.getDateEnd().atZone(ZoneId.systemDefault()).toInstant()));
+            end.set(Calendar.HOUR_OF_DAY, 0);
+            end.set(Calendar.MINUTE, 0);
+            end.set(Calendar.SECOND, 0);
+            end.set(Calendar.MILLISECOND, 0);
+            while (!start.after(end)) {
+                disabledDates.add(start.getTimeInMillis());
+                start.add(Calendar.DAY_OF_MONTH, 1);
+            }
+        }
+        return disabledDates;
     }
 }

@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MyHistoryActivity.class);
                 startActivity(intent);
             }
-
+            
             if ("My Booking".equals(item.getTitle())) {
                 Intent intent = new Intent(getActivity(), MyBookingActivity.class);
                 startActivity(intent);

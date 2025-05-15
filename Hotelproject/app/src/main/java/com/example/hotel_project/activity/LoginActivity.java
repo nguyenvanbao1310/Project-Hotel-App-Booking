@@ -143,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
