@@ -86,4 +86,6 @@ public class AccountServiceImpl implements IAccountService {
         int lastId = accountRepository.findLastAccountId(); // cần viết hàm này
         return String.format("G%03d", lastId + 1);
     }
+
+
 }

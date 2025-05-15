@@ -17,4 +17,6 @@ public interface IAccountService {
     String generateAccountId();
     Account updateAccount2(String id, AccountDTO dto);
 
+
+
 }
