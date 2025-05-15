@@ -1,5 +1,6 @@
 package com.example.demo.api.service;
 
+import com.example.demo.api.dto.AccountDTO;
 import com.example.demo.api.entity.Account;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface IAccountService {
     Optional<Account> getAccountById(String id);
     List<Account> getAllAccounts();
     String generateAccountId();
+    Account updateAccount2(String id, AccountDTO dto);
+
 }

@@ -1,5 +1,6 @@
 package com.example.demo.api.service;
 
+import com.example.demo.api.dto.AccountDTO;
 import com.example.demo.api.entity.Account;
 import com.example.demo.api.repository.AccountRepository;
 import com.example.demo.api.Security.PasswordEncoder;
@@ -34,6 +35,18 @@ public class AccountServiceImpl implements IAccountService {
             acc.setUsername(account.getUsername() != null ? account.getUsername() : acc.getUsername());
             acc.setEmail(account.getEmail() != null ? account.getEmail() : acc.getEmail());
             acc.setPhone(account.getPhone() != null ? account.getPhone() : acc.getPhone());
+            return accountRepository.save(acc);
+        }
+        return null;
+    }
+    @Override
+    public Account updateAccount2(String id, AccountDTO dto) {
+        Optional<Account> existing = accountRepository.findById(id);
+        if (existing.isPresent()) {
+            Account acc = existing.get();
+            acc.setUsername(dto.getUsername() != null ? dto.getUsername() : acc.getUsername());
+            acc.setEmail(dto.getEmail() != null ? dto.getEmail() : acc.getEmail());
+            acc.setPhone(dto.getPhone() != null ? dto.getPhone() : acc.getPhone());
             return accountRepository.save(acc);
         }
         return null;
