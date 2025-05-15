@@ -16,19 +16,25 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.hotel_project.R;
 import com.example.hotel_project.adapter.ExtensionAdapter;
 import com.example.hotel_project.adapter.ImageSliderAdapter;
+import com.example.hotel_project.adapter.RoomInfoAdapter;
+import com.example.hotel_project.model.RoomDTO;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDescriptionDialog extends BottomSheetDialogFragment {
     private List<String> imageUrls;
     private List<String> extension;
 
+    private RoomDTO roomDTO;
+
     private Handler handler = new Handler();
     private int currentIndex = 0;
     private Runnable sliderRunnable;
 
-    public RoomDescriptionDialog(List<String> imageUrls, List<String> extension) {
+    public RoomDescriptionDialog(RoomDTO roomDTO, List<String> imageUrls, List<String> extension) {
+        this.roomDTO = roomDTO;
         this.imageUrls = imageUrls;
         this.extension = extension;
     }
@@ -44,13 +50,20 @@ public class RoomDescriptionDialog extends BottomSheetDialogFragment {
         viewPager.setAdapter(adapter);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewExtensions);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         ExtensionAdapter extensionAdapter = new ExtensionAdapter(extension);
         recyclerView.setAdapter(extensionAdapter);
 
 
+        List<String> roomInfoList = new ArrayList<>();
+        roomInfoList.add("Bed: " + roomDTO.getBedNumber());
+        roomInfoList.add("Bath: " + roomDTO.getBathNumber());
+        roomInfoList.add("Deluxe: " + roomDTO.getRoomType());
+        RecyclerView infoRecyclerView = view.findViewById(R.id.recyclerViewRoomInfo);
+        RoomInfoAdapter infoAdapter = new RoomInfoAdapter(roomInfoList);
+        infoRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        infoRecyclerView.setAdapter(infoAdapter);
         // Auto slide sau mỗi 2 giây
         sliderRunnable = () -> {
             if (viewPager.getAdapter() != null) {

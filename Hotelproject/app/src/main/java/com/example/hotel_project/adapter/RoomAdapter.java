@@ -59,7 +59,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             List<String> imageUrls = room.getImages(); // giả sử mỗi room có list ảnh
             List<String> extension = room.getExtension();   // mô tả phòng
 
-            RoomDescriptionDialog dialog = new RoomDescriptionDialog(imageUrls, extension);
+            RoomDescriptionDialog dialog = new RoomDescriptionDialog(room, imageUrls, extension);
             dialog.show(fragment.getParentFragmentManager(), "RoomDescriptionDialog");
         });
 

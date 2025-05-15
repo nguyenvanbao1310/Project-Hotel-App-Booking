@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -82,6 +84,8 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
             context.startActivity(intent);
         });
 
+
+
     }
 
     @Override
@@ -93,6 +97,8 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
         ImageView imageHotel;
         TextView textName, textHotelCity, textDuration, textAddress, textDateStart, textDateEnd;
 
+
+
         public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
             imageHotel = itemView.findViewById(R.id.imgHotel);
@@ -102,6 +108,7 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
             textDateStart = itemView.findViewById(R.id.txtCheckIn);
             textDateEnd = itemView.findViewById(R.id.txtCheckOut);
             textDuration = itemView.findViewById(R.id.txtDuration);
+
         }
     }
 

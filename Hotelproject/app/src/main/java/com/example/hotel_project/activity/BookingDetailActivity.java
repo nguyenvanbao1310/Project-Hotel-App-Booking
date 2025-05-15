@@ -65,7 +65,6 @@ public class BookingDetailActivity extends AppCompatActivity {
         } else if (bookingType.equals("hour")) {
             String startTime = getIntent().getStringExtra("startTime");
             String hourDuration = getIntent().getStringExtra("hourDuration");
-
         }
 
         imgHotel = findViewById(R.id.imgHotel);
@@ -139,7 +138,11 @@ public class BookingDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(BookingDetailActivity.this, PaymentActivity.class);
                 int totalPriceInt = (int) totalPrice;
+                intent.putExtra("roomDTO", roomDTO);
                 intent.putExtra("totalPrice", totalPriceInt );
+                intent.putExtra("hotel", hotel);
+                intent.putExtra("checkIn", checkIn);
+                intent.putExtra("checkOut", checkOut);
                 startActivity(intent);
             }
         });

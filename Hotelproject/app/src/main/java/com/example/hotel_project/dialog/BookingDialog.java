@@ -52,6 +52,8 @@ public class BookingDialog extends BottomSheetDialogFragment {
 
     private List<BookingScheduleDTO> bookingScheduleDTOList;
 
+    private TextView textCheckIn, textCheckOut;
+
     public static BookingDialog newInstance(Hotel hotel, RoomDTO room, List<BookingScheduleDTO> bookingScheduleDTOList) {
         BookingDialog dialog = new BookingDialog();
         Bundle args = new Bundle();
@@ -84,8 +86,8 @@ public class BookingDialog extends BottomSheetDialogFragment {
         Button btnTimePicker = view.findViewById(R.id.btnTimePicker);
         EditText editHourDuration = view.findViewById(R.id.editHourDuration);
         Button btnConfirmBooking = view.findViewById(R.id.btnConfirmBooking);
-        TextView textCheckIn = view.findViewById(R.id.textCheckIn);
-        TextView textCheckOut = view.findViewById(R.id.textCheckOut);
+        textCheckIn = view.findViewById(R.id.textCheckIn);
+        textCheckOut = view.findViewById(R.id.textCheckOut);
         TextView textPriceDay = view.findViewById(R.id.textPriceByDay);
         TextView textPriceHour = view.findViewById(R.id.textPriceByHour);
 
@@ -152,6 +154,36 @@ public class BookingDialog extends BottomSheetDialogFragment {
                 price = room.getPriceByDay();
                 String checkIn = textCheckIn.getText().toString();
                 String checkOut = textCheckOut.getText().toString();
+                if (checkIn.isEmpty() || checkOut.isEmpty()) {
+                    Toast.makeText(getContext(), "Please select both check-in and check-out dates", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    Date dateCheckIn = sdf.parse(checkIn);
+                    Date dateCheckOut = sdf.parse(checkOut);
+                    Date now = new Date();
+                    if (dateCheckOut.before(dateCheckIn)) {
+                        Toast.makeText(getContext(), "Check-out date must be after or equal to check-in date", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // Check ngày check-in phải >= ngày hiện tại
+                    if (dateCheckIn.before(now)) {
+                        Toast.makeText(getContext(), "Check-in date must be today or later", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // Check ngày check-out phải >= ngày hiện tại
+                    if (dateCheckOut.before(now)) {
+                        Toast.makeText(getContext(), "Check-out date must be today or later", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Invalid date format", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
 
                 message = "Book \"" + room.getRoomType() + "\"\nFrom: " + checkIn + "\nTo: " + checkOut;
 
@@ -164,6 +196,8 @@ public class BookingDialog extends BottomSheetDialogFragment {
                 price = room.getPriceByHour();
                 String hourDur = editHourDuration.getText().toString();
                 String startTime = String.format("%02d:%02d", selectedHour[0], selectedMinute[0]);
+
+
 
                 message = "Book \"" + room.getRoomType() + "\"\nStart: " + startTime + "\nFor: " + hourDur + " hours";
 
@@ -190,25 +224,95 @@ public class BookingDialog extends BottomSheetDialogFragment {
         return view;
     }
     private void showMaterialDatePickerDialog(final TextView textView) {
-        Set<Long> disabledDates = getDisabledDates();
-
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
-        constraintsBuilder.setValidator(new DateValidatorExclude(disabledDates));
+
+        // Lấy thời gian bắt đầu ngày hôm nay theo múi giờ local
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        long todayLocalStart = calendar.getTimeInMillis();
+        long oneDayMillis = 24 * 60 * 60 * 1000;
+
+        if (textView == textCheckIn) {
+            long minDate = todayLocalStart + oneDayMillis; // ngày mai 00:00 local time
+            constraintsBuilder.setStart(minDate);
+
+            Set<Long> disabledDates = getDisabledDates();
+            constraintsBuilder.setValidator(new DateValidatorExclude(disabledDates));
+
+        } else if (textView == textCheckOut) {
+            String checkInStr = textCheckIn.getText().toString();
+            if (checkInStr.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng chọn ngày Check-in trước", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            try {
+                Date checkInDate = sdf.parse(checkInStr);
+                long minDate = checkInDate.getTime();
+                constraintsBuilder.setStart(minDate);
+
+                Set<Long> disabledDates = getDisabledDates();
+                constraintsBuilder.setValidator(new DateValidatorExclude(disabledDates));
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Ngày Check-in không hợp lệ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Chọn ngày")
+                .setTitleText(textView == textCheckIn ? "Chọn ngày Check-in" : "Chọn ngày Check-out")
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build();
 
         datePicker.show(getParentFragmentManager(), "MATERIAL_DATE_PICKER");
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            // selection là timestamp ngày chọn UTC
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String dateStr = sdf.format(new Date(selection));
-            textView.setText(dateStr);
+
+            if (textView == textCheckIn) {
+                textCheckIn.setText(dateStr);
+
+                String checkOutStr = textCheckOut.getText().toString();
+                if (!checkOutStr.isEmpty()) {
+                    try {
+                        Date checkInDate = sdf.parse(dateStr);
+                        Date checkOutDate = sdf.parse(checkOutStr);
+                        if (checkOutDate.before(checkInDate)) {
+                            textCheckOut.setText("");
+                            Toast.makeText(getContext(), "Ngày Check-out phải lớn hơn hoặc bằng ngày Check-in", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else if (textView == textCheckOut) {
+                String checkInStr = textCheckIn.getText().toString();
+                if (!checkInStr.isEmpty()) {
+                    try {
+                        Date checkInDate = sdf.parse(checkInStr);
+                        Date checkOutDate = sdf.parse(dateStr);
+                        if (checkOutDate.before(checkInDate)) {
+                            Toast.makeText(getContext(), "Ngày Check-out phải lớn hơn hoặc bằng ngày Check-in", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            textCheckOut.setText(dateStr);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Vui lòng chọn ngày Check-in trước", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
+
+
 
     // Hàm kiểm tra 1 ngày có nằm trong bất kỳ khoảng đã book nào không
     private boolean isDateBooked(Calendar date) {

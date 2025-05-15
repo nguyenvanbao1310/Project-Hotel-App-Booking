@@ -3,10 +3,9 @@ package com.example.demo.api.controller;
 import com.example.demo.api.dto.BookingOrderDTO;
 import com.example.demo.api.service.BookingOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +35,19 @@ public class BookingOrderController {
     @GetMapping("/order/{orderId}")
     public BookingOrderDTO getBookingOrderById(@PathVariable String orderId) {
         return bookingOrderService.getBookingOrderById(orderId);
+    }
+    @PutMapping("/order/{orderId}/status")
+    public ResponseEntity<Boolean> updateBookingOrderStatus(
+            @PathVariable String orderId,
+            @RequestParam boolean status
+    ) {
+        try {
+            bookingOrderService.changeBookingOrderStatus(orderId, status);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            // log lỗi nếu cần
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
     }
 
 }

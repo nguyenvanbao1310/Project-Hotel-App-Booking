@@ -6,7 +6,9 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface BookingOrderService {
     @GET("api/booking-orders/{accountId}")
@@ -20,4 +22,8 @@ public interface BookingOrderService {
 
     @GET("api/booking-orders/order/{orderId}")
     Call<BookingOrderDTO> getBookingOrderById(@Path("orderId") String orderId);
+
+    @PUT("api/booking-orders/order/{orderId}/status")
+    Call<Boolean> updateBookingStatus(@Path("orderId") String orderId, @Query("status") boolean status);
+
 }

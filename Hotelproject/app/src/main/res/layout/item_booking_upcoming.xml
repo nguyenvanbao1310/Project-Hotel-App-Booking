@@ -9,65 +9,82 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Hotel Image (LEFT) -->
-        <ImageView
-            android:id="@+id/imgHotel"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_hotel_default"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_image_radius"
-            android:clipToOutline="true" />
-
-        <!-- Info (RIGHT) -->
+        <!-- Row: Image + Info -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txtHotelName"
-                android:layout_width="wrap_content"
+            <!-- Hotel Image -->
+            <ImageView
+                android:id="@+id/imgHotel"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_hotel_default"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/bg_image_radius"
+                android:clipToOutline="true" />
+
+            <!-- Info -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Studio M Hotel"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary" />
-            <TextView
-                android:id="@+id/txtRoomType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Executive Suite"
-                android:textSize="14sp"
-                android:textColor="#C62828"
-                android:layout_marginTop="2dp" />
-            <!-- Rating -->
-            <TextView
-                android:id="@+id/txtAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="123 Main St, Ho Chi Minh City"
-                android:textColor="#666666"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp" />
-            <!-- Check-in Time -->
-            <TextView
-                android:id="@+id/txtCheckIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Check in   Wed, Nov 7 2022  Before 12:00"
-                android:textColor="#2E7D32"
-                android:textSize="13sp"
-                android:background="@drawable/bg_checkin"
-                android:padding="6dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtHotelName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Studio M Hotel"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/txtRoomType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Executive Suite"
+                    android:textSize="14sp"
+                    android:textColor="#C62828"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123 Main St, Ho Chi Minh City"
+                    android:textColor="#666666"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/txtCheckIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check in   Wed, Nov 7 2022  Before 12:00"
+                    android:textColor="#2E7D32"
+                    android:textSize="13sp"
+                    android:background="@drawable/bg_checkin"
+                    android:padding="6dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
         </LinearLayout>
+
+        <!-- ✅ Button Cancel nằm dưới cùng trong CardView -->
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#A7BDDC"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -94,10 +96,42 @@ public class BookingScheduleAdapter extends RecyclerView.Adapter<BookingSchedule
                 }
             });
         });
-
-
-
+        holder.btnCancel.setOnClickListener(v -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Cancel Booking")
+                    .setMessage("Are you sure you want to cancel this booking?")
+                    .setPositiveButton("Confirm", (dialog, which) -> {
+                        cancelBooking(bookingSchedule.getIdBookingOrder(), position); // Gọi hàm thực hiện hủy
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+             });
     }
+
+    private void cancelBooking(String orderId, int position){
+        BookingOrderService  bookingOrderService = RetrofitClient.getRetrofit().create(BookingOrderService.class);
+        Call<Boolean> call = bookingOrderService.updateBookingStatus(orderId, false);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null && response.body()) {
+                    Toast.makeText(context, "Booking has been cancelled.", Toast.LENGTH_SHORT).show();
+                    bookingSchedules.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, bookingSchedules.size());
+                } else {
+                    Toast.makeText(context, "Failed to cancel booking.", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(context, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        Toast.makeText(context, "Booking has been cancelled.", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     @Override
     public int getItemCount() {
@@ -108,6 +142,7 @@ public class BookingScheduleAdapter extends RecyclerView.Adapter<BookingSchedule
 
         ImageView imgHotel;
         TextView txtHotelName, txtRoomType, txtAddress, txtCheckIn;
+        Button btnCancel;
 
         public BookingScheduleViewHolder(View itemView) {
             super(itemView);
@@ -116,7 +151,7 @@ public class BookingScheduleAdapter extends RecyclerView.Adapter<BookingSchedule
             txtAddress = itemView.findViewById(R.id.txtAddress);
             txtCheckIn = itemView.findViewById(R.id.txtCheckIn);
             imgHotel = itemView.findViewById(R.id.imgHotel);
-
+            btnCancel = itemView.findViewById(R.id.btnCancel);
 
         }
     }
