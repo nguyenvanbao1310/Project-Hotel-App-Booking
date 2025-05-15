@@ -27,4 +27,9 @@ public class RoomController {
     public List<RoomDTO> getAllRoomsByHotelId(@PathVariable String hotelId) {
         return roomService.getAllRoomsByHotelId(hotelId);
     }
+
+    @GetMapping("/room/{roomId}")
+    public RoomDTO getRoomByRoomId(@PathVariable String roomId) {
+        return roomService.getRoomByRoomId(roomId);
+    }
 }

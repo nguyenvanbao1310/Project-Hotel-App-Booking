@@ -1,8 +1,11 @@
 package com.example.hotel_project.fragment;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +23,7 @@ public class AboutFragment extends Fragment {
 
     private TextView descriptionText, ownerName;
     private ImageView ownerImage;
-    private ImageButton chatButton, callButton;
+    private ImageButton zaloButton, callButton;
 
     private Hotel currentHotel; // giả sử bạn truyền hotel này từ activity hoặc database
 
@@ -53,7 +56,7 @@ public class AboutFragment extends Fragment {
         descriptionText = view.findViewById(R.id.descriptionText);
         ownerName = view.findViewById(R.id.ownerName);
         ownerImage = view.findViewById(R.id.ownerImage);
-        chatButton = view.findViewById(R.id.chatButton);
+        zaloButton = view.findViewById(R.id.zaloButton);
         callButton = view.findViewById(R.id.callButton);
 
         if (currentHotel != null) {
@@ -70,7 +73,21 @@ public class AboutFragment extends Fragment {
 //                    .into(ownerImage);
         }
 
-        chatButton.setOnClickListener(v -> {
+        ObjectAnimator shakeAnimator = ObjectAnimator.ofFloat(callButton, "rotation", -10f, 10f, -10f, 10f, 0f);
+
+        ObjectAnimator shakeAnimator1 = ObjectAnimator.ofFloat(zaloButton, "rotation", -10f, 10f, -10f, 10f, 0f);
+
+        shakeAnimator.setDuration(500); // Thời gian 1 lần rung
+        shakeAnimator.setRepeatCount(ValueAnimator.INFINITE); // Lặp vô hạn
+        shakeAnimator.setRepeatMode(ValueAnimator.RESTART);  // Bắt đầu lại từ đầu
+        shakeAnimator.start();
+
+        shakeAnimator1.setDuration(500); // Thời gian 1 lần rung
+        shakeAnimator1.setRepeatCount(ValueAnimator.INFINITE); // Lặp vô hạn
+        shakeAnimator1.setRepeatMode(ValueAnimator.RESTART);  // Bắt đầu lại từ đầu
+        shakeAnimator1.start();
+
+        zaloButton.setOnClickListener(v -> {
         });
 
         callButton.setOnClickListener(v -> {

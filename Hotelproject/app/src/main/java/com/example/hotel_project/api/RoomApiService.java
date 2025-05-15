@@ -13,4 +13,7 @@ public interface RoomApiService {
 
     @GET("api/rooms/{hotelId}")
     Call<List<RoomDTO>> getAllRoomsByHotelId(@Path("hotelId") String hotelId);
+
+    @GET("api/rooms/room/{roomId}")
+    Call<RoomDTO> getRoomById(@Path("roomId") String roomId);
 }

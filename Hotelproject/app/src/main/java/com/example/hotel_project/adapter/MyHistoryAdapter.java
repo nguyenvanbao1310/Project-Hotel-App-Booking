@@ -64,6 +64,8 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.Hote
         String formattedDate1 = dateEnd.format(outputFormatter1);
         holder.textDateEnd.setText("Checkout: " + formattedDate1);
 
+        long nights = java.time.Duration.between(dateStart, dateEnd).toDays();
+        holder.textDuration.setText(nights + " nights");
 
 
         // Load ảnh từ URL

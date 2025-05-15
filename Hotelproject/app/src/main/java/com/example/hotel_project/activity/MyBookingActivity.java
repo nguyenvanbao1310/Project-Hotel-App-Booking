@@ -1,6 +1,8 @@
 package com.example.hotel_project.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -16,6 +18,8 @@ public class MyBookingActivity extends AppCompatActivity {
     ViewPager2 viewPager;
     BookingPagerAdapter adapter;
 
+    ImageView img_pre;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +27,7 @@ public class MyBookingActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
+        img_pre = findViewById(R.id.img_pre);
 
         adapter = new BookingPagerAdapter(this);
         viewPager.setAdapter(adapter);
@@ -41,5 +46,11 @@ public class MyBookingActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
+        img_pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

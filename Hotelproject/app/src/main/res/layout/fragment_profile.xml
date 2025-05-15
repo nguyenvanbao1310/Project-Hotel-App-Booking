@@ -42,7 +42,7 @@
                 android:background="@drawable/circle_white"
                 android:padding="4dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_profile" />
+                android:src="@drawable/img_avatar" />
 
             <TextView
                 android:id="@+id/txtName"

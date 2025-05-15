@@ -5,6 +5,7 @@ import com.example.demo.api.entity.BookingOrder;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -29,4 +30,5 @@ public interface BookingOrderRepository extends CrudRepository<BookingOrder, Str
             "WHERE bo.accountOrder.id = :accountId AND bo.status = false")
     List<BookingOrderDTO> findCancelledBookingOrdersByAccountId(String accountId);
 
+    BookingOrder findBookingOrderByIdOrder(@PathVariable String orderId);
 }

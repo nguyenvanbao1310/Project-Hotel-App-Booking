@@ -26,6 +26,7 @@ public class BookingScheduleService {
         return bookingSchedules.stream().map(bookingSchedule -> {
             BookingScheduleDTO dto = new BookingScheduleDTO();
             dto.setIdBookRoom(bookingSchedule.getIdBookRoom());
+            dto.setIdBookingOrder(bookingSchedule.getBookingOrder().getIdOrder());
             dto.setDateStart(bookingSchedule.getDateStart());
             dto.setDateEnd(bookingSchedule.getDateEnd());
             dto.setAccountId(bookingSchedule.getAccountBook().getId());

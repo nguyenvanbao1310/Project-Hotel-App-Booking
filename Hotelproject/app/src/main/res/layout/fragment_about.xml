@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/chatButton"
+        android:id="@+id/zaloButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="40dp"
@@ -28,9 +28,9 @@
         android:layout_marginEnd="20dp"
         android:padding="8dp"
         android:background="@drawable/circle_sliver"
-        android:src="@drawable/ic_chat_contact"
+        android:src="@drawable/ic_zalo"
         android:contentDescription="Chat button"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toEndOf="@+id/ownerName"
         app:layout_constraintTop_toBottomOf="@+id/textContact" />
 
@@ -46,7 +46,7 @@
         android:src="@drawable/ic_call_contact"
         android:contentDescription="Chat button"
         android:scaleType="centerInside"
-        app:layout_constraintStart_toEndOf="@+id/chatButton"
+        app:layout_constraintStart_toEndOf="@+id/zaloButton"
         app:layout_constraintTop_toBottomOf="@+id/textContact" />
 
     <ImageView

@@ -1,6 +1,8 @@
 package com.example.hotel_project.model;
 
-public class HotelBookingDTO {
+import java.io.Serializable;
+
+public class HotelBookingDTO  implements Serializable {
     private String id;
     private String name;
     private String address;
