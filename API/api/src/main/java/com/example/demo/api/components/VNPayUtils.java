@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class VNPayUtils {
@@ -24,21 +25,28 @@ public class VNPayUtils {
         return formatter.format(cld.getTime());
     }
 
-    // Hash all fields for VNPay
     public String hashAllFields(Map<String, String> fields) {
-        List<String> fieldNames = new ArrayList<>(fields.keySet());
+        // Loại bỏ các trường null/empty và các trường hash
+        Map<String, String> filteredFields = fields.entrySet().stream()
+                .filter(entry -> entry.getValue() != null && !entry.getValue().isEmpty())
+                .filter(entry -> !entry.getKey().equals("vnp_SecureHash"))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        // Sắp xếp theo tên trường
+        List<String> fieldNames = new ArrayList<>(filteredFields.keySet());
         Collections.sort(fieldNames);
+
         StringBuilder sb = new StringBuilder();
-        for (Iterator<String> itr = fieldNames.iterator(); itr.hasNext(); ) {
-            String fieldName = itr.next();
-            String fieldValue = fields.get(fieldName);
-            if ((fieldValue != null) && (!fieldValue.isEmpty())) {
-                sb.append(fieldName).append("=").append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
-            }
-            if (itr.hasNext()) {
+        for (int i = 0; i < fieldNames.size(); i++) {
+            String fieldName = fieldNames.get(i);
+            String fieldValue = filteredFields.get(fieldName);
+            sb.append(fieldName).append("=").append(URLEncoder.encode(fieldValue, StandardCharsets.UTF_8));
+            if (i < fieldNames.size() - 1) {
                 sb.append("&");
             }
         }
+
+        System.out.println("Data to hash: " + sb.toString());
         return hmacSHA512(vnPayConfig.getSecretKey(), sb.toString());
     }
 
