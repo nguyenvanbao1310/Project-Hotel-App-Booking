@@ -50,7 +50,20 @@ public class SettingActivity extends AppCompatActivity {
             Intent intent = new Intent(SettingActivity.this, PrivacyPolicyActivity.class);
             startActivity(intent);
         });
+        switchNotification = findViewById(R.id.switchNotification);
 
+        // Khôi phục trạng thái đã lưu trước đó
+        boolean isNotifEnabled = SharedPreferencesManager.getNotificationState(this);
+        switchNotification.setChecked(isNotifEnabled);
+
+        // Lưu trạng thái khi người dùng thay đổi
+        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferencesManager.saveNotificationState(this, isChecked);
+        });
+        txtChangePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingActivity.this, ChangePasswordActivity.class);
+            startActivity(intent);
+        });
 
     }
 }

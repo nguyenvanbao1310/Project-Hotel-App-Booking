@@ -49,7 +49,17 @@ public class SharedPreferencesManager {
         editor.clear();
         editor.apply();
     }
-   
+    public static void saveNotificationState(Context context, boolean isEnabled) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("notif_enabled", isEnabled);
+        editor.apply();
+    }
+
+    public static boolean getNotificationState(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("notif_enabled", true); // mặc định bật = true
+    }
 
 }
 
