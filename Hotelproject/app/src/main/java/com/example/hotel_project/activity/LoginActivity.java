@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private LoginApiService apiService;
     private TextView viewAsGuest;
+    private CheckBox keepMeLogin;
+
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
 
@@ -74,6 +77,15 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
+        keepMeLogin = findViewById(R.id.keepMeLogin);
+
+// Tự động điền nếu đã lưu
+        if (SharedPreferencesManager.isKeepMeLogin(this)) {
+            emailInput.setText(SharedPreferencesManager.getSavedEmail(this));
+            passwordInput.setText(SharedPreferencesManager.getSavedPassword(this));
+            keepMeLogin.setChecked(true);
+        }
+
     }
 //    private void signInWithGoogle() {
 //        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -154,6 +166,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+        SharedPreferencesManager.saveLoginInfo(
+                LoginActivity.this,
+                email,
+                password,
+                keepMeLogin.isChecked()
+        );
+
     }
 }
 

@@ -38,7 +38,14 @@ public class SettingActivity extends AppCompatActivity {
             finish(); // Đóng SettingActivity và quay lại activity trước đó
         });
         btnLogout.setOnClickListener(v -> {
-            SharedPreferencesManager.clear(getApplicationContext()); // Xóa tất cả dữ liệu
+
+            // Xóa thông tin người dùng (AccountDTO và GuestDTO)
+            SharedPreferencesManager.saveAccountDTO(getApplicationContext(), null);
+            SharedPreferencesManager.saveGuestDTO(getApplicationContext(), null);
+
+            // KHÔNG gọi saveLoginInfo("", "", false);
+            // Giữ lại email, password và trạng thái "keep me login"
+
             Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear task stack
             startActivity(intent);
