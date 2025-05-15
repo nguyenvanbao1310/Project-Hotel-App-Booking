@@ -124,10 +124,12 @@ public class AccountController {
         String email = request.get("email");
         String otp = request.get("otp");
 
+        System.out.println("OTP client gửi: " + otp);
         String storedOtp = otpService.getOtpFromMemoryOrDb(email);
+        System.out.println("OTP server lưu: " + storedOtp);
 
         if (!otp.equals(storedOtp)) {
-            return ResponseEntity.badRequest().body("Mã OTP không chính xác.");
+            return ResponseEntity.badRequest().body("Mã OTP không chính xác hen.");
         }
 
         // Lấy lại thông tin đã đăng ký trước đó
@@ -162,6 +164,26 @@ public class AccountController {
 
         return ResponseEntity.ok("Đăng ký thành công!");
     }
+    @PostMapping("/xacnhan-otp")
+    public ResponseEntity<String> XacNhanOtp(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String otp = request.get("otp");
+
+        System.out.println("OTP client gửi: " + otp);
+        String storedOtp = otpService.getOtpFromMemoryOrDb(email);
+        System.out.println("OTP server lưu: " + storedOtp);
+
+        if (!otp.equals(storedOtp)) {
+            return ResponseEntity.badRequest().body("Mã OTP không chính xác đâu.");
+        }
+
+        // Xóa OTP sau khi xác nhận thành công (nếu cần)
+        otpService.removeOtp(email);
+
+        // Trả về thành công để client chuyển sang bước tiếp theo
+        return ResponseEntity.ok("Xác nhận OTP thành công!");
+    }
+
     @PostMapping("/resend-otp")
     public ResponseEntity<Map<String, String>> resendOtp(@RequestBody Map<String, String> request) {
         String email = request.get("email");
@@ -187,16 +209,14 @@ public class AccountController {
     }
 
 
-    // Hàm sinh ID
     private String generateAccountId() {
-        long count = accountRepo.count() + 1;
-        return String.format("G%03d", count);
+        return "G" + UUID.randomUUID().toString().substring(0, 8);
     }
 
     private String generatePersonId() {
-        long count = personRepo.count() + 1;
-        return String.format("P%03d", count);
+        return "P" + UUID.randomUUID().toString().substring(0, 8);
     }
+
     @PostMapping("/forgot-password")
     public ResponseEntity<?> sendOtpForPasswordReset(@RequestBody Map<String, String> request) {
         String email = request.get("email");
@@ -222,36 +242,68 @@ public class AccountController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, String>> resetPassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");
-        String otp = request.get("otp");
         String newPassword = request.get("newPassword");
 
-        if (email == null || otp == null || newPassword == null) {
-            return ResponseEntity.badRequest().body("Email, OTP và mật khẩu mới không được để trống");
+        Map<String, String> response = new HashMap<>();
+
+        if (email == null || newPassword == null) {
+            response.put("message", "Email và mật khẩu mới không được để trống");
+            return ResponseEntity.badRequest().body(response);
         }
 
-        String storedOtp = otpService.getOtpFromMemoryOrDb(email);
-        if (storedOtp != null && storedOtp.equals(otp)) {
-            Optional<Account> accountOptional = accountServiceI.findByEmail(email);
-            if (accountOptional.isPresent()) {
-                Account account = accountOptional.get();
-                String hashedPassword = PasswordEncoder.hashPassword(newPassword);
-                account.setPassword(hashedPassword);
-                accountServiceI.updateAccount(account);
-                return ResponseEntity.ok("Mật khẩu đã được đặt lại thành công");
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Người dùng không tồn tại");
-            }
+        Optional<Account> accountOptional = accountServiceI.findByEmail(email);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            String hashedPassword = PasswordEncoder.hashPassword(newPassword);
+            account.setPassword(hashedPassword);
+            accountServiceI.updateAccount(account);
+
+            otpService.removeOtp(email);
+
+            response.put("message", "Mật khẩu đã được đặt lại thành công");
+            return ResponseEntity.ok(response);
         } else {
-            return new ResponseEntity<>("Mã OTP không chính xác hoặc đã hết hạn.", HttpStatus.BAD_REQUEST);
+            response.put("message", "Người dùng không tồn tại");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAccount(@PathVariable String id, @RequestBody AccountDTO dto) {
         return ResponseEntity.ok(accountServiceImpl.updateAccount2(id, dto));
     }
 
+    @PostMapping("/change-password")
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String oldPassword = request.get("oldPassword");
+        String newPassword = request.get("newPassword");
+        String confirmPassword = request.get("confirmPassword");
+
+        Map<String, String> response = new HashMap<>();
+
+        if (email == null || oldPassword == null || newPassword == null || confirmPassword == null ||
+                email.isEmpty() || oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            response.put("message", "Thiếu thông tin đổi mật khẩu");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            response.put("message", "Mật khẩu mới và xác nhận mật khẩu không khớp");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        boolean changed = accountServiceImpl.changePassword(email, oldPassword, newPassword);
+        if (!changed) {
+            response.put("message", "Đổi mật khẩu thất bại: email không tồn tại hoặc mật khẩu cũ không đúng");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        response.put("message", "Đổi mật khẩu thành công");
+        return ResponseEntity.ok(response);
+    }
 
 }

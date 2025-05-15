@@ -16,7 +16,7 @@ public interface IAccountService {
     List<Account> getAllAccounts();
     String generateAccountId();
     Account updateAccount2(String id, AccountDTO dto);
-
+    boolean changePassword(String email, String oldPassword, String newPassword);
 
 
 }
