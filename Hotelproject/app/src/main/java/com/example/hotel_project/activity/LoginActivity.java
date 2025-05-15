@@ -44,6 +44,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (SharedPreferencesManager.isLoggedIn(this)) {
+            Intent intent = new Intent(LoginActivity.this, HotelActivity.class);
+            startActivity(intent);
+            finish();
+            return; // Không load layout đăng nhập nữa
+        }
+
         setContentView(R.layout.activity_login); // thay bằng layout bạn dán ở trên
 
         emailInput = findViewById(R.id.emailInput);
@@ -147,6 +154,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     SharedPreferencesManager.saveAccountDTO(LoginActivity.this, account);
                     SharedPreferencesManager.saveGuestDTO(LoginActivity.this, guest); // Lưu GuestDTO
+
+                    SharedPreferencesManager.setLoggedIn(LoginActivity.this, true);
 
                     Toast.makeText(LoginActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, HotelActivity.class);

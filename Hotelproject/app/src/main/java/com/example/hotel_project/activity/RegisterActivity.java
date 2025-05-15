@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,12 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnCreate);
 
         apiService = RetrofitClient.getRetrofit().create(RegisterApiService.class);
+        TextView textOrSignIn = findViewById(R.id.textView);
+
+        textOrSignIn.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
 
         btnRegister.setOnClickListener(v -> {
             RegisterRequest request = new RegisterRequest();

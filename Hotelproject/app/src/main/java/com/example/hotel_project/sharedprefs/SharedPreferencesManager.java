@@ -92,6 +92,15 @@ public class SharedPreferencesManager {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean("notif_enabled", true); // mặc định bật = true
     }
+    public static void setLoggedIn(Context context, boolean loggedIn) {
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("isLoggedIn", loggedIn).apply();
+    }
+
+    public static boolean isLoggedIn(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return prefs.getBoolean("isLoggedIn", false);
+    }
 
 }
 

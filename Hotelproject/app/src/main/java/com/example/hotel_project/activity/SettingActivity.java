@@ -45,6 +45,7 @@ public class SettingActivity extends AppCompatActivity {
 
             // KHÔNG gọi saveLoginInfo("", "", false);
             // Giữ lại email, password và trạng thái "keep me login"
+            SharedPreferencesManager.setLoggedIn(this, false);
 
             Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear task stack
