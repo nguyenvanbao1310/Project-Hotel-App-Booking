@@ -86,6 +86,17 @@ public class AccountServiceImpl implements IAccountService {
         int lastId = accountRepository.findLastAccountId(); // cần viết hàm này
         return String.format("G%03d", lastId + 1);
     }
+    public boolean changePassword(String email, String oldPassword, String newPassword) {
+        Optional<Account> optionalAccount = accountRepository.findByEmail(email);
+        if (optionalAccount.isEmpty()) return false;
+
+        Account account = optionalAccount.get();
+        if (!PasswordEncoder.checkPassword(oldPassword, account.getPassword())) return false;
+
+        account.setPassword(PasswordEncoder.hashPassword(newPassword));
+        accountRepository.save(account);
+        return true;
+    }
 
 
 }
