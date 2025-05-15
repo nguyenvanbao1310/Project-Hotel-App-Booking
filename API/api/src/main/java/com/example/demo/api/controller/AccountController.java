@@ -248,5 +248,10 @@ public class AccountController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAccount(@PathVariable String id, @RequestBody AccountDTO dto) {
+        return ResponseEntity.ok(accountServiceImpl.updateAccount2(id, dto));
+    }
+
 
 }
