@@ -2,6 +2,9 @@ package com.example.demo.api.controller;
 
 
 import com.example.demo.api.Security.PasswordEncoder;
+import com.example.demo.api.dto.AccountDTO;
+import com.example.demo.api.dto.GuestDTO;
+import com.example.demo.api.dto.LoginRequest;
 import com.example.demo.api.dto.RegisterRequest;
 import com.example.demo.api.entity.Account;
 import com.example.demo.api.entity.Guest;
@@ -37,6 +40,8 @@ public class AccountController {
     private PersonRepository personRepo;
     @Autowired
     private AccountRepository accountRepo;
+    @Autowired
+    private GuestServiceImpl guestServiceImpl;
 
     @PostMapping("add_account")
     public Account addAccount(@RequestBody Account account) {
@@ -49,33 +54,40 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> request) {
-        String email = request.get("email");
-        String password = request.get("password");
-
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest request) {
+        String email = request.getEmail();
+        String password = request.getPassword();
 
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            response.put("message", "Email và mật khẩu không được để trống");
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.badRequest().body(Map.of("message", "Email và mật khẩu không được để trống"));
         }
 
         Optional<Account> accountOptional = accountServiceImpl.findByEmail(email);
-        if (accountOptional.isPresent()) {
-            Account account = accountOptional.get();
-
-            if (PasswordEncoder.checkPassword(password, account.getPassword())) {
-                response.put("message", "Đăng nhập thành công!");
-                return ResponseEntity.ok(response);
-            } else {
-                response.put("message", "Mật khẩu không chính xác");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            }
-        } else {
-            response.put("message", "Email không tồn tại");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        if (accountOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Email không tồn tại"));
         }
+
+        Account account = accountOptional.get();
+
+        if (!PasswordEncoder.checkPassword(password, account.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Mật khẩu không chính xác"));
+        }
+
+        AccountDTO accountDTO = new AccountDTO(account);
+
+        // ✅ Thêm đoạn này để lấy guestDTO
+        Optional<Guest> guestOptional = guestServiceImpl.findByAccount(account);
+        GuestDTO guestDTO = guestOptional.map(GuestDTO::new).orElse(null);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Đăng nhập thành công!");
+        response.put("account", accountDTO);
+        response.put("guest", guestDTO); // ✅ Gửi cả guest về client
+
+        return ResponseEntity.ok(response);
     }
+
+
 
     @PostMapping("/register")
     public ResponseEntity<String> registerAccount( @Valid @RequestBody RegisterRequest request,

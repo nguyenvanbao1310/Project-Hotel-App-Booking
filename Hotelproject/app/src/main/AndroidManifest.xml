@@ -18,29 +18,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hotelproject"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".activity.PaymentActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
         <activity
-            android:name=".activity.PaymentActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
+            android:name=".activity.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="yourapp"
-                    android:host="payment" />
             </intent-filter>
         </activity>
+<!--        <activity-->
+<!--            android:name=".activity.PaymentActivity"-->
+<!--            android:exported="true"-->
+<!--            android:launchMode="singleTask">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <data-->
+<!--                    android:scheme="yourapp"-->
+<!--                    android:host="payment" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
@@ -88,6 +88,18 @@
         </activity>
         <activity
             android:name=".activity.MyBookingActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.HotelActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.OtpActivity"
             android:exported="true">
         </activity>
         <meta-data
