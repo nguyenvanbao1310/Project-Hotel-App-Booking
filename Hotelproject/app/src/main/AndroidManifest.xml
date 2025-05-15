@@ -90,6 +90,11 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".activity.PrivacyPolicyActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
             android:name=".activity.BookingOrderDetailActivity"
             android:exported="true">
         </activity>

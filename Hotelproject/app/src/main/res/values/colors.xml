@@ -26,4 +26,9 @@
     <!-- Màu gradient -->
     <color name="gradientStart">#FF9800</color>
     <color name="gradientEnd">#FF5722</color>
+    <color name="background_gray">#F5F5F5</color>
+    <color name="text_dark_gray">#333333</color>
+    <color name="text_light_gray">#757575</color>
+    <color name="colorPrimary">#3F51B5</color>
+
 </resources>

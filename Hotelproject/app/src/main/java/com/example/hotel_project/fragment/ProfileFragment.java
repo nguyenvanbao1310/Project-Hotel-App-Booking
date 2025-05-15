@@ -15,6 +15,7 @@ import com.example.hotel_project.activity.MyBookingActivity;
 import com.example.hotel_project.activity.MyHistoryActivity;
 import com.example.hotel_project.activity.MyInformationActivity;
 import com.example.hotel_project.activity.MyReviewActivity;
+import com.example.hotel_project.activity.SettingActivity;
 import com.example.hotel_project.adapter.ProfileMenuAdapter;
 import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.GuestDTO;
@@ -79,6 +80,10 @@ public class ProfileFragment extends Fragment {
             
             if ("My Booking".equals(item.getTitle())) {
                 Intent intent = new Intent(getActivity(), MyBookingActivity.class);
+                startActivity(intent);
+            }
+            if ("Setting".equals(item.getTitle())) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });
