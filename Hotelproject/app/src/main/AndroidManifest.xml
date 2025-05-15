@@ -91,6 +91,25 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".activity.BookingOrderDetailActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.BookingOrderCompleteActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.BookingOrderCancelledActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".activity.PaymentActivity"
+        <activity
             android:name=".activity.HotelActivity"
             android:exported="true">
         </activity>

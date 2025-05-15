@@ -8,6 +8,7 @@ public class BookingScheduleDTO {
     private String idBookRoom;
     private LocalDateTime dateStart;
     private LocalDateTime dateEnd;
+    private String idBookingOrder;
     private String accountId;
     private RoomDTO room;
     private HotelBookingDTO hotel;

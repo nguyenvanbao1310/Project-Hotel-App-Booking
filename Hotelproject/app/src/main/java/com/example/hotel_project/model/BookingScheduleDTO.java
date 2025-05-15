@@ -1,10 +1,14 @@
 package com.example.hotel_project.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class BookingScheduleDTO {
+public class BookingScheduleDTO implements Serializable {
     private String idBookRoom;
     private LocalDateTime dateStart;
+
+    private String idBookingOrder;
+
     private LocalDateTime dateEnd;
     private String accountId;
     private RoomDTO room;
@@ -15,9 +19,10 @@ public class BookingScheduleDTO {
     public BookingScheduleDTO() {
     }
 
-    public BookingScheduleDTO(String idBookRoom, LocalDateTime dateStart, LocalDateTime dateEnd, String accountId, RoomDTO room, HotelBookingDTO hotel) {
+    public BookingScheduleDTO(String idBookRoom, LocalDateTime dateStart, String idBookingOrder, LocalDateTime dateEnd, String accountId, RoomDTO room, HotelBookingDTO hotel) {
         this.idBookRoom = idBookRoom;
         this.dateStart = dateStart;
+        this.idBookingOrder = idBookingOrder;
         this.dateEnd = dateEnd;
         this.accountId = accountId;
         this.room = room;
@@ -70,6 +75,14 @@ public class BookingScheduleDTO {
 
     public void setHotel(HotelBookingDTO hotel) {
         this.hotel = hotel;
+    }
+
+    public String getIdBookingOrder() {
+        return idBookingOrder;
+    }
+
+    public void setIdBookingOrder(String idBookingOrder) {
+        this.idBookingOrder = idBookingOrder;
     }
 }
 

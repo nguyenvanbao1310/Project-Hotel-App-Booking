@@ -17,4 +17,7 @@ public interface BookingOrderService {
 
     @GET("api/booking-orders/booking-cancelled/{accountId}")
     Call<List<BookingOrderDTO>> getCancelledBookingOrdersByAccountId(@Path("accountId") String accountId);
+
+    @GET("api/booking-orders/order/{orderId}")
+    Call<BookingOrderDTO> getBookingOrderById(@Path("orderId") String orderId);
 }

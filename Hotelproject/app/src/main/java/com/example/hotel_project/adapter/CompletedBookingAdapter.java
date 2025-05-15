@@ -2,6 +2,7 @@ package com.example.hotel_project.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.BookingOrderCancelledActivity;
+import com.example.hotel_project.activity.BookingOrderCompleteActivity;
 import com.example.hotel_project.activity.HotelDetailActivity;
 import com.example.hotel_project.activity.WriteReviewActivity;
+import com.example.hotel_project.api.RoomApiService;
 import com.example.hotel_project.model.BookingOrderDTO;
+import com.example.hotel_project.model.RoomDTO;
 import com.example.hotel_project.retrofit.RetrofitClient;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CompletedBookingAdapter extends RecyclerView.Adapter<CompletedBookingAdapter.HotelViewHolder>{
     private List<BookingOrderDTO> bookingOrderDTO;
@@ -72,14 +81,41 @@ public class CompletedBookingAdapter extends RecyclerView.Adapter<CompletedBooki
                 .into(holder.imageHotel);
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, HotelDetailActivity.class);
-            intent.putExtra("hotel_id", bookingOrder.getHotelId());
-            context.startActivity(intent);
+
+
+            RoomApiService apiService = RetrofitClient.getRetrofit().create(RoomApiService.class);
+            Call<RoomDTO> call = apiService.getRoomById(bookingOrder.getRoomId());
+
+            call.enqueue(new Callback<RoomDTO>() {
+                @Override
+                public void onResponse(Call<RoomDTO> call, Response<RoomDTO> response) {
+                    if (response.isSuccessful()) {
+                        RoomDTO dto = response.body();
+                        Intent intent = new Intent(context, BookingOrderCompleteActivity.class);
+                        intent.putExtra("bookingOrderDTO", bookingOrder);
+                        intent.putExtra("roomDTO", dto );
+                        intent.putExtra("hotelDTO", bookingOrder.getHotelOrder());
+                        context.startActivity(intent);
+                    } else {
+                        Log.e("CompletedBookingAdapte", "Error: " + response.message());
+                    }
+                }
+                @Override
+                public void onFailure(Call<RoomDTO> call, Throwable t) {
+                    Log.e("CompletedBookingAdapte", "API Failure: ", t);
+                }
+            });
         });
 
         holder.btnAddReview.setOnClickListener(v -> {
             Intent intent = new Intent(context, WriteReviewActivity.class);
             intent.putExtra("bookingOrder", bookingOrder);
+            context.startActivity(intent);
+        });
+
+        holder.btnBook.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HotelDetailActivity.class);
+            intent.putExtra("hotel_id", bookingOrder.getHotelId());
             context.startActivity(intent);
         });
     }

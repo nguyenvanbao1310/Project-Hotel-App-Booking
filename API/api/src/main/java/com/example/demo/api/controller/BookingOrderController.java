@@ -33,5 +33,9 @@ public class BookingOrderController {
         return bookingOrderService.getCancelledBookingOrdersByAccountId(accountId);
     }
 
+    @GetMapping("/order/{orderId}")
+    public BookingOrderDTO getBookingOrderById(@PathVariable String orderId) {
+        return bookingOrderService.getBookingOrderById(orderId);
+    }
 
 }

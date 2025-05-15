@@ -48,4 +48,18 @@ public class RoomService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    public RoomDTO getRoomByRoomId(String roomId) {
+        Room room = roomRepository.findRoomById(roomId);
+        RoomDTO dto = new RoomDTO();
+        dto.setId(room.getId());
+        dto.setRoomType(room.getDetailRoom() != null ? room.getDetailRoom().getBedType() : "N/A");
+        dto.setBedNumber(room.getDetailRoom() != null ? room.getDetailRoom().getBedNumbers() : 0);
+        dto.setBathNumber(room.getDetailRoom() != null ? room.getDetailRoom().getBathroomNumber() : 0);
+        dto.setPriceByDay(room.getPriceByDay());
+        dto.setPriceByHour(room.getPriceByHour());
+        dto.setImages(room.getDetailRoom() != null ? room.getDetailRoom().getImages() : null);
+        dto.setExtension(room.getDetailRoom() != null ? room.getDetailRoom().getExtension() : null);
+        return dto;
+    }
 }
