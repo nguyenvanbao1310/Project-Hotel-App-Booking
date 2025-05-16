@@ -147,6 +147,8 @@ public class PaymentActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         if (response.body()) {
                             Toast.makeText(PaymentActivity.this, "Tạo booking thành công!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(PaymentActivity.this, ThankYouActivity.class);
+                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(PaymentActivity.this, "Tạo booking thất bại!", Toast.LENGTH_SHORT).show();

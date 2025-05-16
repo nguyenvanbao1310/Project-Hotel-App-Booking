@@ -2,6 +2,7 @@ package com.example.hotel_project.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,5 +64,10 @@ public class MyHistoryActivity extends AppCompatActivity {
                 Toast.makeText(MyHistoryActivity.this, "Lỗi kết nối API", Toast.LENGTH_SHORT).show();
             }
         });
+        ImageView btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 }

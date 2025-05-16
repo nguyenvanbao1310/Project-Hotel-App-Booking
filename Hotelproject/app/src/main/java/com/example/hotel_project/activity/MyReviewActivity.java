@@ -2,6 +2,7 @@ package com.example.hotel_project.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +53,11 @@ public class MyReviewActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(reviewAdapter);
         fetchRooms();
+        ImageView btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 
     private void fetchRooms(){
