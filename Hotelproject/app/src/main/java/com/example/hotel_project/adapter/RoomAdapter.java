@@ -1,5 +1,6 @@
 package com.example.hotel_project.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotel_project.R;
+import com.example.hotel_project.activity.LoginActivity;
 import com.example.hotel_project.api.BookingScheduleService;
 import com.example.hotel_project.dialog.BookingDialog;
 import com.example.hotel_project.dialog.RoomDescriptionDialog;
+import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.BookingScheduleDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
 import com.example.hotel_project.retrofit.RetrofitClient;
+import com.example.hotel_project.sharedprefs.SharedPreferencesManager;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,11 +39,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private List<RoomDTO> roomList;
 
     private Hotel hotel;
+    private AccountDTO account;
 
-    public RoomAdapter(Fragment fragment, Hotel hotel, List<RoomDTO> roomList) {
+    public RoomAdapter(Fragment fragment, Hotel hotel, List<RoomDTO> roomList, AccountDTO account) {
         this.fragment = fragment;
         this.hotel = hotel;
         this.roomList = roomList;
+        this.account = account; // lưu account
     }
 
     @NonNull
@@ -64,8 +70,30 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         });
 
         holder.buttonBook.setOnClickListener(v -> {
+            if (account != null && "guest".equalsIgnoreCase(account.getUsername())) {
+                Toast.makeText(fragment.getContext(), "Vui lòng đăng nhập để đặt phòng!", Toast.LENGTH_LONG).show();
+
+                // Xoá account guest và thông tin đăng nhập
+                SharedPreferencesManager.clearAccount(fragment.getContext());
+                SharedPreferencesManager.setLoggedIn(fragment.getContext(), false);
+
+                // Chuyển về LoginActivity
+                Intent intent = new Intent(fragment.getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                fragment.startActivity(intent);
+
+                // Nếu fragment trong activity, kết thúc activity luôn để tránh quay lại
+                if (fragment.getActivity() != null) {
+                    fragment.getActivity().finish();
+                }
+
+                return;
+            }
+
             showBookingDialog(room);
         });
+
+
     }
 
     @Override

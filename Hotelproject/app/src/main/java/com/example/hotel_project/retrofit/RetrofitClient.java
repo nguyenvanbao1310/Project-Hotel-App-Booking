@@ -24,8 +24,8 @@ public class RetrofitClient {
 
 //    public static final String BASE_URL = "http://172.20.10.5:8080/";
 //    public static final String IMG_URL = "http://172.20.10.5:8080";
-    public static final String BASE_URL = "http://192.168.100.156:8080/";
-    public static final String IMG_URL = "http://192.168.100.156:8080";
+    public static final String BASE_URL = "http://172.16.31.50:8080/";
+    public static final String IMG_URL = "http://172.16.31.50:8080";
 
     public static Retrofit getRetrofit() {
         if (retrofit == null) {

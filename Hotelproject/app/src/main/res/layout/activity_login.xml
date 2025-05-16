@@ -191,6 +191,20 @@
 
     </LinearLayout>
 
+
+    <!-- Guest Button -->
+    <Button
+        android:id="@+id/guestLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue as Guest"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/viewAsGuest"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <!-- View as Guest -->
     <TextView
         android:id="@+id/viewAsGuest"
@@ -203,4 +217,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

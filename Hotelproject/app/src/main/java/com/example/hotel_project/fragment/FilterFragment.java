@@ -26,7 +26,7 @@ public class FilterFragment extends Fragment {
     private int priceMin, priceMax;
     private float selectedRating = 0;
 
-    private Button btn1, btn2, btn3, btn4, btn5;
+    private Button btn1, btn2, btn3, btn4, btn5, btn6;
 
     @Nullable
     @Override
@@ -40,18 +40,32 @@ public class FilterFragment extends Fragment {
         btn3 = view.findViewById(R.id.price_button_3);
         btn4 = view.findViewById(R.id.price_button_4);
         btn5 = view.findViewById(R.id.price_button_5);
+        btn6 = view.findViewById(R.id.price_button_6);
 
         btn1.setOnClickListener(this::onPriceButtonClick);
         btn2.setOnClickListener(this::onPriceButtonClick);
         btn3.setOnClickListener(this::onPriceButtonClick);
         btn4.setOnClickListener(this::onPriceButtonClick);
         btn5.setOnClickListener(this::onPriceButtonClick);
+        btn6.setOnClickListener(this::onPriceButtonClick);
 
         // Chỉnh sửa màu của các sao trên RatingBar
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(android.graphics.Color.parseColor("#FFEB3B"), android.graphics.PorterDuff.Mode.SRC_ATOP); // đã chọn
         stars.getDrawable(1).setColorFilter(android.graphics.Color.parseColor("#FFECB3"), android.graphics.PorterDuff.Mode.SRC_ATOP); // 1 phần
         stars.getDrawable(0).setColorFilter(android.graphics.Color.LTGRAY, android.graphics.PorterDuff.Mode.SRC_ATOP);
+
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if (fromUser) { // Chỉ xử lý khi người dùng tự tay chọn
+                    selectedRating = rating;
+                    Toast.makeText(getContext(), "Rating chọn: " + rating, Toast.LENGTH_SHORT).show();
+                    // Hoặc gán vào biến: selectedRating = rating;
+                }
+            }
+        });
 
         return view;
     }
@@ -78,9 +92,12 @@ public class FilterFragment extends Fragment {
         } else if (clickedButton.getId() == R.id.price_button_5) {
             priceMin = 800000;
             priceMax = 1000000;
-        } else {
+        } else if (clickedButton.getId() == R.id.price_button_6) {
+            priceMin = 1000000;
+            priceMax = 10000000;
+        }else {
             priceMin = 0;
-            priceMax = 0;
+            priceMax = 10000000;
         }
 
     }
@@ -103,9 +120,8 @@ public class FilterFragment extends Fragment {
     public int getPriceMax() {
         return priceMax;
     }
-
     public float getSelectedRating() {
-        return ratingBar.getRating();  // Giả sử bạn lấy giá trị rating từ RatingBar
+        return selectedRating;
     }
 
 

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hotel_project.R;
 import com.example.hotel_project.api.LoginApiService;
+import com.example.hotel_project.enums.EnumRole;
 import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.GuestDTO;
 import com.example.hotel_project.model.LoginRequest;
@@ -24,6 +25,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Task;
+
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
+    private Button guestButton;
+
 
 
     @Override
@@ -92,6 +97,37 @@ public class LoginActivity extends AppCompatActivity {
             passwordInput.setText(SharedPreferencesManager.getSavedPassword(this));
             keepMeLogin.setChecked(true);
         }
+        guestButton = findViewById(R.id.guestLoginButton);
+        guestButton.setOnClickListener(v -> {
+            String uniqueId = UUID.randomUUID().toString(); // hoặc UUID
+
+            AccountDTO guestAccount = new AccountDTO();
+            guestAccount.setId(uniqueId);
+            guestAccount.setUsername("guest");
+            guestAccount.setPassword("");
+            guestAccount.setEmail("guest@hotel.com");
+            guestAccount.setPhone("");
+            guestAccount.setRole(EnumRole.GUEST);
+
+            SharedPreferencesManager.saveAccountDTO(LoginActivity.this, guestAccount);
+            SharedPreferencesManager.setLoggedIn(LoginActivity.this, true);
+
+            GuestDTO guestDTO = new GuestDTO();
+            guestDTO.setId(uniqueId); // ID giống với account để liên kết
+            guestDTO.setFullname("Khách vãng lai");
+            guestDTO.setCccd("");
+            guestDTO.setAddress("");
+            guestDTO.setGender(null);
+            guestDTO.setAccount_id(uniqueId);
+
+            SharedPreferencesManager.saveGuestDTO(LoginActivity.this, guestDTO);
+
+            Intent intent = new Intent(LoginActivity.this, HotelActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+
 
     }
 //    private void signInWithGoogle() {

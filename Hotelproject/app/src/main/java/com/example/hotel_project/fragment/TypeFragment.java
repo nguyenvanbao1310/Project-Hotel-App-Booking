@@ -14,9 +14,11 @@ import com.example.hotel_project.R;
 import com.example.hotel_project.adapter.RoomAdapter;
 import com.example.hotel_project.api.HotelApiService;
 import com.example.hotel_project.api.RoomApiService;
+import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
 import com.example.hotel_project.retrofit.RetrofitClient;
+import com.example.hotel_project.sharedprefs.SharedPreferencesManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,25 +50,26 @@ public class TypeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_type, container, false);
 
         if (getArguments() != null) {
             hotel = (Hotel) getArguments().getSerializable("hotel");
         }
 
-
         recyclerView = view.findViewById(R.id.recyclerViewType);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         roomList = new ArrayList<>();
-        roomAdapter = new RoomAdapter(this, hotel, roomList);
+        AccountDTO account = SharedPreferencesManager.getAccountDTO(requireContext());
+
+        roomAdapter = new RoomAdapter(this, hotel, roomList, account); // <-- truyền account vào adapter
         recyclerView.setAdapter(roomAdapter);
 
         fetchRooms();
 
         return view;
     }
+
 
     private void fetchRooms() {
         RoomApiService apiService = RetrofitClient.getRetrofit().create(RoomApiService.class);

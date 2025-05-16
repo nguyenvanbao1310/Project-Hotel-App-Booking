@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.hotel_project.R;
 import com.example.hotel_project.activity.BookingDetailActivity;
+import com.example.hotel_project.model.AccountDTO;
 import com.example.hotel_project.model.BookingScheduleDTO;
 import com.example.hotel_project.model.Hotel;
 import com.example.hotel_project.model.RoomDTO;
@@ -53,6 +54,8 @@ public class BookingDialog extends BottomSheetDialogFragment {
     private List<BookingScheduleDTO> bookingScheduleDTOList;
 
     private TextView textCheckIn, textCheckOut;
+
+
 
     public static BookingDialog newInstance(Hotel hotel, RoomDTO room, List<BookingScheduleDTO> bookingScheduleDTOList) {
         BookingDialog dialog = new BookingDialog();
@@ -117,6 +120,7 @@ public class BookingDialog extends BottomSheetDialogFragment {
 
         final int[] selectedHour = {12};
         final int[] selectedMinute = {0};
+
 
         // TimePicker setup
         btnTimePicker.setOnClickListener(v -> {

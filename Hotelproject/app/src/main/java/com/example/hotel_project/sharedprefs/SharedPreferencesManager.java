@@ -87,6 +87,23 @@ public class SharedPreferencesManager {
         editor.putBoolean("notif_enabled", isEnabled);
         editor.apply();
     }
+    public static void clearAccount(Context context) {
+        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("accountDTO");
+        editor.remove("guestDTO");
+        editor.apply();
+
+        // Xóa trạng thái đăng nhập
+        setLoggedIn(context, false);
+
+        // Xóa thông tin đăng nhập lưu (email/password/keepMeLogin) nếu cần
+        SharedPreferences.Editor prefsEditor = getPrefs(context).edit();
+        prefsEditor.remove(KEY_EMAIL);
+        prefsEditor.remove(KEY_PASSWORD);
+        prefsEditor.remove(KEY_KEEP_ME_LOGIN);
+        prefsEditor.apply();
+    }
 
     public static boolean getNotificationState(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);

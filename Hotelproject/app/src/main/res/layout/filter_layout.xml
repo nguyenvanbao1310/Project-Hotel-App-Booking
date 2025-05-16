@@ -68,6 +68,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 flexbox:layout_flexBasisPercent="45%" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/price_button_6"
+                android:text="> 1,000,000 VND"
+                style="@style/FilterButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                flexbox:layout_flexBasisPercent="45%" />
         </com.google.android.flexbox.FlexboxLayout>
 
         <!-- Rating Section -->
@@ -87,7 +95,6 @@
             android:numStars="5"
             android:stepSize="1"
             android:isIndicator="false"
-            style="?android:attr/ratingBarStyleIndicator"
             android:layout_marginTop="8dp"
             android:scaleX="1"
             android:scaleY="1" />

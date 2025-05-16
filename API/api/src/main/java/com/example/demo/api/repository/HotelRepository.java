@@ -14,17 +14,19 @@ public interface HotelRepository extends JpaRepository<Hotel, String> {
     @Query("SELECT h FROM Hotel h JOIN h.rooms r WHERE h.rooms IS NOT EMPTY AND r.priceByDay BETWEEN :priceMin AND :priceMax AND r.priceByDay IS NOT NULL AND r.priceByDay > 0")
     List<Hotel> findHotelsByRoomPriceRange(@Param("priceMin") double priceMin, @Param("priceMax") double priceMax);
 
-    @Query("SELECT h FROM Hotel h " +
+    @Query("SELECT DISTINCT h FROM Hotel h " +
             "JOIN h.rooms r " +
             "LEFT JOIN FETCH h.reviews " +
-            "WHERE h.rooms IS NOT EMPTY " +
-            "AND r.priceByDay BETWEEN :priceMin AND :priceMax " +
+            "WHERE r.priceByDay BETWEEN :priceMin AND :priceMax " +
             "AND r.priceByDay IS NOT NULL " +
             "AND r.priceByDay > 0 " +
-            "AND (SELECT AVG(rw.rating) FROM Review rw WHERE rw.hotelReview = h) >= :rating")
+            "AND (COALESCE((SELECT AVG(rw.rating) FROM Review rw WHERE rw.hotelReview = h), 0) >= :rating " +
+            "OR (SELECT COUNT(rw) FROM Review rw WHERE rw.hotelReview = h) = 0)")
     List<Hotel> findHotelsByPriceRangeAndRating(@Param("priceMin") double priceMin,
                                                 @Param("priceMax") double priceMax,
                                                 @Param("rating") double rating);
+
+
 
     @Query("SELECT h FROM Hotel h WHERE LOWER(h.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(h.address) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Hotel> searchHotelsByKeyword(@Param("keyword") String keyword);

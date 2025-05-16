@@ -179,8 +179,21 @@ public class WriteReviewActivity extends AppCompatActivity {
     }
 
     private void submitReview() {
-        double rating = (ratingLocation.getRating() + ratingService.getRating()) / 2;
+
+        float locationRating = ratingLocation.getRating();
+        float serviceRating = ratingService.getRating();
         String content = reviewText.getText().toString();
+        if (content.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập nội dung đánh giá", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (locationRating == 0 && serviceRating == 0) {
+            Toast.makeText(this, "Vui lòng đánh giá ít nhất một mục", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double rating = (ratingLocation.getRating() + ratingService.getRating()) / 2;
 
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setIdReview(null);
